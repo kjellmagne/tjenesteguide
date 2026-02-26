@@ -24,7 +24,7 @@ export default function Layout({ children }: LayoutProps) {
               </span>
               <span>
                 <span className="brand-text text-xl sm:text-2xl font-extrabold">
-                  Tjenestekatalog
+                  Tjenesteguide
                 </span>
                 <span className="block text-xs font-medium text-[var(--color-text-subtle)]">
                   Admin

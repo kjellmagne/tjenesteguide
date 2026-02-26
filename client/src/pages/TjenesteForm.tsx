@@ -429,7 +429,7 @@ export default function TjenesteForm() {
             {isEdit ? "Rediger tjeneste" : "Ny tjeneste"}
           </h1>
           <p className="text-[var(--color-text-muted)]">
-            {isEdit ? "Oppdater informasjon om tjenesten" : "Opprett en ny tjeneste i katalogen"}
+            {isEdit ? "Oppdater informasjon om tjenesten" : "Opprett en ny tjeneste i Tjenesteguide"}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

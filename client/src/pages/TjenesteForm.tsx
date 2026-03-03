@@ -474,13 +474,14 @@ export default function TjenesteForm() {
   }
 
   function setTelefonÅpningstid(rawValue: string) {
-    const value = rawValue.trim();
+    const value = rawValue;
+    const hasOpeningstid = value.trim().length > 0;
     const current = [...(formData.kontaktpunkter || [])];
     const idx = current.findIndex((kp) => kp.type === "telefon");
     const existing = idx >= 0 ? current[idx] : undefined;
     const hasTelefon = Boolean(existing?.verdi?.trim());
 
-    if (!value && !hasTelefon) {
+    if (!hasOpeningstid && !hasTelefon) {
       if (idx >= 0) {
         current.splice(idx, 1);
       }
@@ -492,14 +493,14 @@ export default function TjenesteForm() {
       current[idx] = {
         ...current[idx],
         beskrivelse: current[idx].beskrivelse || "Telefon",
-        åpningstid: value || undefined,
+        åpningstid: hasOpeningstid ? value : undefined,
       };
     } else {
       current.push({
         type: "telefon",
         beskrivelse: "Telefon",
         verdi: "",
-        åpningstid: value || undefined,
+        åpningstid: hasOpeningstid ? value : undefined,
       });
     }
 

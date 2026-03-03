@@ -46,6 +46,7 @@ export interface Kontaktpunkt {
   type: KontaktpunktType;
   beskrivelse: string;
   verdi: string;
+  åpningstid?: string;
 }
 
 export interface EksternLenke {
@@ -81,6 +82,8 @@ export interface Tjeneste {
   geografi?: Geografi;
   for_du_søker?: string[];
   beskrivelse: string;
+  beskrivelse_plain_text?: string;
+  beskrivelse_rich_base64?: string;
   tildelingskriterier?: string[];
   særlige_varianter?: SærligVariant[];
   vedtak?: VedtakInfo;

@@ -16,6 +16,13 @@ import {
   updateTjeneste,
 } from "../api/tjenester";
 import Modal from "../components/Modal";
+import RichTextEditor from "../components/RichTextEditor";
+import {
+  normalizeBeskrivelseRepresentations,
+  resolveRichHtml,
+  stripRichTextToPlainText,
+  encodeUtf8ToBase64,
+} from "../utils/richText";
 
 const INITIAL_FORM_DATA: Tjeneste = {
   id: "",
@@ -28,6 +35,8 @@ const INITIAL_FORM_DATA: Tjeneste = {
   trinn_nivå: "grunnmur",
   målgruppe: [],
   beskrivelse: "",
+  beskrivelse_plain_text: "",
+  beskrivelse_rich_base64: "",
   status: "aktiv",
 };
 
@@ -80,6 +89,19 @@ export default function TjenesteForm() {
     formSnapshot !== initialSnapshotRef.current &&
     !saving &&
     !success;
+  const beskrivelseRichHtml = useMemo(
+    () =>
+      resolveRichHtml({
+        beskrivelse: formData.beskrivelse,
+        beskrivelse_plain_text: formData.beskrivelse_plain_text,
+        beskrivelse_rich_base64: formData.beskrivelse_rich_base64,
+      }),
+    [
+      formData.beskrivelse,
+      formData.beskrivelse_plain_text,
+      formData.beskrivelse_rich_base64,
+    ]
+  );
 
   async function loadTjeneste() {
     if (!id) return;
@@ -87,8 +109,10 @@ export default function TjenesteForm() {
       setLoading(true);
       setError(null);
       const data = await fetchTjenesteById(id);
+      const normalizedBeskrivelse = normalizeBeskrivelseRepresentations(data);
       const normalized: Tjeneste = {
         ...data,
+        ...normalizedBeskrivelse,
         trinn_nivå: data.trinn_nivå || (data.vedtaksbasert ? "trinn1" : "grunnmur"),
       };
       setFormData(normalized);
@@ -216,6 +240,16 @@ export default function TjenesteForm() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }
 
+  function updateBeskrivelseFromRichHtml(richHtml: string) {
+    const plainText = stripRichTextToPlainText(richHtml);
+    setFormData((prev) => ({
+      ...prev,
+      beskrivelse: plainText,
+      beskrivelse_plain_text: plainText,
+      beskrivelse_rich_base64: encodeUtf8ToBase64(richHtml),
+    }));
+  }
+
   function addArrayItem(field: keyof Tjeneste, item: any) {
     setFormData((prev) => ({
       ...prev,
@@ -326,6 +360,12 @@ export default function TjenesteForm() {
     setSuccess(false);
 
     try {
+      const normalizedBeskrivelse = normalizeBeskrivelseRepresentations(formData);
+      if (!normalizedBeskrivelse.beskrivelse.trim()) {
+        setError("Beskrivelse er påkrevd.");
+        return;
+      }
+
       const normalizedTrinn = formData.vedtaksbasert
         ? formData.trinn_nivå === "grunnmur"
           ? "trinn1"
@@ -334,6 +374,7 @@ export default function TjenesteForm() {
 
       const payload: Tjeneste = {
         ...formData,
+        ...normalizedBeskrivelse,
         trinn_nivå: normalizedTrinn,
         vedtaksbasert: normalizedTrinn !== "grunnmur",
         lavterskel: normalizedTrinn === "grunnmur",
@@ -388,18 +429,29 @@ export default function TjenesteForm() {
 
   const leverandørNavn = formData.leverandør_organisasjoner?.[0] || "";
 
+  function getKontaktpunkt(type: Kontaktpunkt["type"]) {
+    return formData.kontaktpunkter?.find((kp) => kp.type === type);
+  }
+
   function getKontaktVerdi(type: Kontaktpunkt["type"]) {
-    return formData.kontaktpunkter?.find((kp) => kp.type === type)?.verdi || "";
+    return getKontaktpunkt(type)?.verdi || "";
+  }
+
+  function getTelefonÅpningstid() {
+    return getKontaktpunkt("telefon")?.åpningstid || "";
   }
 
   function setKontaktVerdi(type: "telefon" | "epost" | "nettside", rawValue: string) {
     const value = rawValue.trim();
     const current = [...(formData.kontaktpunkter || [])];
     const idx = current.findIndex((kp) => kp.type === type);
+    const existing = idx >= 0 ? current[idx] : undefined;
 
     if (!value) {
-      if (idx >= 0) {
+      if (idx >= 0 && !(type === "telefon" && existing?.åpningstid?.trim())) {
         current.splice(idx, 1);
+      } else if (idx >= 0) {
+        current[idx] = { ...existing, verdi: "" } as Kontaktpunkt;
       }
       updateField("kontaktpunkter", current.length > 0 ? current : undefined);
       return;
@@ -415,6 +467,39 @@ export default function TjenesteForm() {
         type,
         beskrivelse: defaultBeskrivelse,
         verdi: value,
+      });
+    }
+
+    updateField("kontaktpunkter", current);
+  }
+
+  function setTelefonÅpningstid(rawValue: string) {
+    const value = rawValue.trim();
+    const current = [...(formData.kontaktpunkter || [])];
+    const idx = current.findIndex((kp) => kp.type === "telefon");
+    const existing = idx >= 0 ? current[idx] : undefined;
+    const hasTelefon = Boolean(existing?.verdi?.trim());
+
+    if (!value && !hasTelefon) {
+      if (idx >= 0) {
+        current.splice(idx, 1);
+      }
+      updateField("kontaktpunkter", current.length > 0 ? current : undefined);
+      return;
+    }
+
+    if (idx >= 0) {
+      current[idx] = {
+        ...current[idx],
+        beskrivelse: current[idx].beskrivelse || "Telefon",
+        åpningstid: value || undefined,
+      };
+    } else {
+      current.push({
+        type: "telefon",
+        beskrivelse: "Telefon",
+        verdi: "",
+        åpningstid: value || undefined,
       });
     }
 
@@ -771,6 +856,19 @@ export default function TjenesteForm() {
             />
           </FormField>
 
+          <FormField label="Telefon åpningstid">
+            <textarea
+              value={getTelefonÅpningstid()}
+              onChange={(e) => setTelefonÅpningstid(e.target.value)}
+              rows={4}
+              placeholder={"F.eks.\nMandag-fredag: 08:00-15:30\nKveld: 18:00-20:00\nHelg: stengt"}
+              className="input-field"
+            />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Fleksibel fritekst. Du kan skrive dagtid, kveld, helg eller andre varianter.
+            </p>
+          </FormField>
+
           <FormField label="Nettside">
             <input
               type="url"
@@ -834,14 +932,16 @@ export default function TjenesteForm() {
 
         {/* Innhold og kriterier */}
         <Section title="Innhold og kriterier">
-          <FormField label="Beskrivelse *">
-            <textarea
-              value={formData.beskrivelse}
-              onChange={(e) => updateField("beskrivelse", e.target.value)}
+          <FormField label="Beskrivelse" required>
+            <RichTextEditor
+              value={beskrivelseRichHtml}
+              onChange={updateBeskrivelseFromRichHtml}
               required
-              rows={6}
-              className="input-field"
+              placeholder="Skriv en rik beskrivelse..."
             />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
           </FormField>
 
           <FormField label="For du søker">

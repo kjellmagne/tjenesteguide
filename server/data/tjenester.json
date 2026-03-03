@@ -44,7 +44,9 @@
     "trinn_nivå": "grunnmur",
     "interne_notater": [
       "Når du begynner å oppleve utfordringer knyttet til din egen helse, eller merker at du har behov for hjelp i hverdagen, oppfordrer vi deg til å kontakte Tjenestekontoret.\nHer kan du få råd, informasjon og veiledning hvis du har utfordringer eller spørsmål om egen helse.\nTjenestekontoret bistår med veiledning der målet er at du skal mestre egen hverdagen samtidig som du unngår at helsetilstanden din blir verre.\nDet er lurt å kontakte Tjenestekontoret tidlig, før helseutfordringene blir for store. Da kan du få støtte som gjør det lettere å mestre hverdagen over tid. Målet er å legge til rette for aktivitet og støtte deg som pasient, bruker eller pårørende, slik at du kan bruke egne krefter, ferdigheter og nettverk på en god måte. Dette bidrar til økt selvstendighet og mestring i hverdagen.\nDu som er pårørende kan også kontakte Tjenestekontoret for å få oversikt over hva som kan gjøre hverdagen bedre for din nærmeste og for deg selv.\nTjenestekontoret samarbeider med de andre kommunale helsetjenestene, og kan veilede deg videre til annet hjelpetilbud ved behov.\nInformasjon og veiledning\nTjenestekontoret har oversikt over alle tjenester og tilbud; vedtaksbaserte tjenester, lavterskeltilbud og tjenester som tilbys av frivilligheten.\nHer er vi\nTjenestekontoret er tverrfaglig sammensatt og du finner oss på Alta Helsesenter. Du kan nå oss på telefon 902 43 261 eller e-post: Postmottak.tjenestekontoret@alta.kommune.no. Hvis du ønsker å møte oss i våre lokaler må du avtal tid for møte i forkant.\nTips:\nTjenestekontoret er første kontaktpunkt inn til kommunen! Ta kontakt med oss dersom du lurer på hva som finnes av velferdsteknologi, tilbud, aktiviteter og tjenester i kommunen\nKontakt:\nTelefon: 902 43 261\nE-post: Postmottak.tjenestekontoret@alta.kommune.no"
-    ]
+    ],
+    "beskrivelse_plain_text": "Når du begynner å oppleve utfordringer knyttet til din egen helse, eller merker at du har behov for hjelp i hverdagen, oppfordrer vi deg til å kontakte Tjenestekontoret.",
+    "beskrivelse_rich_base64": "TsOlciBkdSBiZWd5bm5lciDDpSBvcHBsZXZlIHV0Zm9yZHJpbmdlciBrbnl0dGV0IHRpbCBkaW4gZWdlbiBoZWxzZSwgZWxsZXIgbWVya2VyIGF0IGR1IGhhciBiZWhvdiBmb3IgaGplbHAgaSBodmVyZGFnZW4sIG9wcGZvcmRyZXIgdmkgZGVnIHRpbCDDpSBrb250YWt0ZSBUamVuZXN0ZWtvbnRvcmV0Lg=="
   },
   {
     "id": "000002",
@@ -77,7 +79,9 @@
     "trinn_nivå": "trinn1",
     "interne_notater": [
       "På bakgrunn av situasjonen du beskriver, vil du få informasjon fra Tjenestekontoret om velferdsteknologiske løsninger. Hvis vi vurderer at du kan ha nytte av en eller flere slike løsninger, avtaler vi tid med Digiteamet for installering og opplæring. Noen eksempler på velferdsteknologi og hva det kan hjelpe med (og hva det krever av deg som bruker) er:\nElektronisk medisineringsstøtte\nEvondos dispenser for multidosepakkede legemidler. Denne varsler når du skal ta medisiner og dersom medisinen ikke er tatt. Varselet kan gå til dine pårørende eller til helsepersonell.\nDette er et aktuelt hjelpemiddel for\n• personer med utfordringer knyttet til rus og psykisk helse\n• personer med mild til moderat kognitiv svikt, som for eksempel hukommelsesproblemer\n• personer med utviklingshemming\nDigitalt tilsyn- dørsensor\nDet kan monteres ulike sensorer som varsler når ulike hendelser skjer. Det kan være varsling når noen åpner en dør eller et vindu og går ut, når noen går ut av sengen, når noen er ute av sengen lengre enn en definert tid eller andre typer varsler.\nDørsensor kan for eksempel være et hensiktsmessig tilbud hvis det er fare for at du eller noen du er pårørende til, går ut uten hensiktsmessig bekledning for årstid, eller går ut uten å finne veien hjem igjen.\nDigitalt tilsyn-kamera\nDigitalt tilsyn med kamera brukes for at vi i den kommunale helsetjenesten raskt skal kunne sjekke om alt står bra til med deg. Løsningen gir mulighet for å utføre tilsyn uten å forstyrre bruker og eventuelt pårørende unødvendig, spesielt på natt. Digitalt tilsyn med kamera er et tilbud dersom det er behov for tilsyn, (oftest brukes løsningen om natten) varsling ved fall, hvor bruker ikke selv kan varsle varsling ved ulik atferd som det er viktig å fange opp raskt.\nKamera vil som hovedregel tildeles personer som allerede mottar annen bistand, og vil som hovedregel være en erstatning for annen tjeneste/personbistand.\nTrygghetsalarm\nPersoner med funksjonsnedsettelse og andre som kan ha behov for å tilkalle hjelp, kan få tildelt trygghetsalarm. Det bidrar til økt trygghet og mestring i hverdagen. Trygghetsalarmen utløses med en alarmknapp som for eksempel kan bæres rundt halsen eller på håndleddet. Ved utløst alarm vil det opprettes kontakt med vakttelefon, og pleier vil kunne kommunisere med deg via trygghetsalarmen.\nLokaliseringsteknologi (GPS)\nVed behov, kan du få lokaliseringsteknologi i form av GPS. GPS er en liten enhet som du bærer med deg. Enheten sender informasjon om hvor du er, slik at du kan lokaliseres ved behov.\nGPS kan bidra til at personer med demenssykdom kan mestre eget liv og bo hjemme lenger. I tillegg er det et trygt og livsviktig hjelpemiddel for både pårørende og den som trenger bistand."
-    ]
+    ],
+    "beskrivelse_plain_text": "På bakgrunn av situasjonen du beskriver, vil du få informasjon fra Tjenestekontoret om velferdsteknologiske løsninger. Hvis vi vurderer at du kan ha nytte av en eller flere slike løsninger, avtaler vi tid med Digiteamet for installering og opplæring. Noen eksempler på velferdsteknologi og hva det kan hjelpe med (og hva det krever av deg som bruker) er:",
+    "beskrivelse_rich_base64": "UMOlIGJha2dydW5uIGF2IHNpdHVhc2pvbmVuIGR1IGJlc2tyaXZlciwgdmlsIGR1IGbDpSBpbmZvcm1hc2pvbiBmcmEgVGplbmVzdGVrb250b3JldCBvbSB2ZWxmZXJkc3Rla25vbG9naXNrZSBsw7hzbmluZ2VyLiBIdmlzIHZpIHZ1cmRlcmVyIGF0IGR1IGthbiBoYSBueXR0ZSBhdiBlbiBlbGxlciBmbGVyZSBzbGlrZSBsw7hzbmluZ2VyLCBhdnRhbGVyIHZpIHRpZCBtZWQgRGlnaXRlYW1ldCBmb3IgaW5zdGFsbGVyaW5nIG9nIG9wcGzDpnJpbmcuIE5vZW4gZWtzZW1wbGVyIHDDpSB2ZWxmZXJkc3Rla25vbG9naSBvZyBodmEgZGV0IGthbiBoamVscGUgbWVkIChvZyBodmEgZGV0IGtyZXZlciBhdiBkZWcgc29tIGJydWtlcikgZXI6"
   },
   {
     "id": "000003",
@@ -113,7 +117,9 @@
         "beskrivelse": "E-post",
         "verdi": "hukommelsesteam@alta.kommune.no"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Ved mistanke om demens, er det viktig å ta symptomene på alvor og oppsøke hjelp. Det trenger ikke være en diagnose i bunnen for å ta kontakt. Tidlig utredning og oppfølging er med å sikre at du kan få rett tilbud til rett tid. Tidlig utredning er også viktig for å utelukke andre sykdommer og tilstander.",
+    "beskrivelse_rich_base64": "VmVkIG1pc3RhbmtlIG9tIGRlbWVucywgZXIgZGV0IHZpa3RpZyDDpSB0YSBzeW1wdG9tZW5lIHDDpSBhbHZvciBvZyBvcHBzw7hrZSBoamVscC4gRGV0IHRyZW5nZXIgaWtrZSB2w6ZyZSBlbiBkaWFnbm9zZSBpIGJ1bm5lbiBmb3Igw6UgdGEga29udGFrdC4gVGlkbGlnIHV0cmVkbmluZyBvZyBvcHBmw7hsZ2luZyBlciBtZWQgw6Ugc2lrcmUgYXQgZHUga2FuIGbDpSByZXR0IHRpbGJ1ZCB0aWwgcmV0dCB0aWQuIFRpZGxpZyB1dHJlZG5pbmcgZXIgb2dzw6UgdmlrdGlnIGZvciDDpSB1dGVsdWtrZSBhbmRyZSBzeWtkb21tZXIgb2cgdGlsc3RhbmRlci4="
   },
   {
     "id": "000004",
@@ -142,7 +148,9 @@
     "status": "aktiv",
     "interne_notater": [
       "Kreftkoordinator er et tilbud til alle innbyggere i Alta kommune som lever med kreft - fra mistanke og diagnose til behandling, rehabilitering og tiden etterpå.\nDu kan også ta kontakt dersom du har en annen alvorlig sykdom og har behov for støtte og veiledning. Pårørende kan ta kontakt på vegne av seg selv eller den som er syk.\nKreftkoordinatoren hjelper deg å finne frem i tjenestene, og jobber for at du skal oppleve trygghet, forutsigbarhet og god oppfølging gjennom sykdomsforløpet.\nDette kan kreftkoordinatoren bidra med\nsamtale og kartlegging av behov\ninformasjon, støtte og veiledning til pasient og pårørende\navklare hvilke tilbud som passer best for deg og din situasjon\nsamarbeid med fastlege, spesialisthelsetjeneste, skole, barnehage og andre kommunale og frivillige tjenester\ntilrettelegge for gode overganger i behandlings- og oppfølgingsforløpet\netter kartlegging vurderes det sammen med deg hvilke tiltak som er aktuelle. Det kan være:\ngruppetilbud og møteplasser\npraktisk bistand, for eksempel hjemmetjenester\noppfølging og støtte fra det lindrende teamet\nandre relevante kommunale eller regionale tilbud\nDu kan ta kontakt direkte med kreftkoordinator - du trenger ikke henvisning. Pårørende og samarbeidspartnere kan også henvende seg.\nKontakt:\nTelefon 915 26 477 på hverdager."
-    ]
+    ],
+    "beskrivelse_plain_text": "Kreftkoordinator er et tilbud til alle innbyggere i Alta kommune som lever med kreft - fra mistanke og diagnose til behandling, rehabilitering og tiden etterpå.",
+    "beskrivelse_rich_base64": "S3JlZnRrb29yZGluYXRvciBlciBldCB0aWxidWQgdGlsIGFsbGUgaW5uYnlnZ2VyZSBpIEFsdGEga29tbXVuZSBzb20gbGV2ZXIgbWVkIGtyZWZ0IC0gZnJhIG1pc3RhbmtlIG9nIGRpYWdub3NlIHRpbCBiZWhhbmRsaW5nLCByZWhhYmlsaXRlcmluZyBvZyB0aWRlbiBldHRlcnDDpS4="
   },
   {
     "id": "000005",
@@ -186,7 +194,9 @@
           "Alta gir fantastiske muligheter for et aktivt, nært og innholdsrikt friluftsliv hele året. Med et tørt klima og variert landskap- alt fra vidde til hav er mulighetene uendelige. Det er gode turmuligheter, badeplasser, parker, lekeplasser, utendørs idrettsanlegg, turløyper, skiløyper og mange andre sommer- og vinteraktiviteter.Kultur, idrett og fritid - ALTA KOMMUNE"
         ]
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "I Alta kommune er det fødestua på Klinikk Alta som tilbyr rutinemessige svangerskapsoppfølging til gravide innbyggere, i samarbeid med kommunale fastleger. I tillegg til fødsler, tilbyr vi barselomsorg, følgetjeneste og hjemmebesøk etter fødsel. Kontrollene inneholder kartlegginger, råd og veiledning av den gravide. Sentrale tema kan være levevaner, tilknytning, fødsel, barseltid, amming og kvinnehelse. Fødestue Alta",
+    "beskrivelse_rich_base64": "SSBBbHRhIGtvbW11bmUgZXIgZGV0IGbDuGRlc3R1YSBww6UgS2xpbmlrayBBbHRhIHNvbSB0aWxieXIgcnV0aW5lbWVzc2lnZSBzdmFuZ2Vyc2thcHNvcHBmw7hsZ2luZyB0aWwgZ3JhdmlkZSBpbm5ieWdnZXJlLCBpIHNhbWFyYmVpZCBtZWQga29tbXVuYWxlIGZhc3RsZWdlci4gSSB0aWxsZWdnIHRpbCBmw7hkc2xlciwgdGlsYnlyIHZpIGJhcnNlbG9tc29yZywgZsO4bGdldGplbmVzdGUgb2cgaGplbW1lYmVzw7hrIGV0dGVyIGbDuGRzZWwuIEtvbnRyb2xsZW5lIGlubmVob2xkZXIga2FydGxlZ2dpbmdlciwgcsOlZCBvZyB2ZWlsZWRuaW5nIGF2IGRlbiBncmF2aWRlLiBTZW50cmFsZSB0ZW1hIGthbiB2w6ZyZSBsZXZldmFuZXIsIHRpbGtueXRuaW5nLCBmw7hkc2VsLCBiYXJzZWx0aWQsIGFtbWluZyBvZyBrdmlubmVoZWxzZS4gRsO4ZGVzdHVlIEFsdGE="
   },
   {
     "id": "000006",
@@ -235,7 +245,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://app.helseboka.no/checkin/staff/4502303/login"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Fysioterapi",
+    "beskrivelse_rich_base64": "RnlzaW90ZXJhcGk="
   },
   {
     "id": "000007",
@@ -298,7 +310,9 @@
         "beskrivelse": "Telefon",
         "verdi": "46 86 29 62"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Ergoterapeutene gir tjenester til personer som står i fare for å få, eller har fått nedsatt funksjonsevne og har fokus på å gjøre hverdagslivet mulig. Vi kartlegger dine muligheter for aktivitet og deltakelse. Målet med tilbudet er at du skal mestre egen hverdag, leve et aktivt liv og delta i samfunnet. Vi har fokus på det som er viktige aktiviteter i livet ditt- og hvordan du ønsker å delta. Vi har kompetanse på å se sammenhengen mellom person, aktivitet og omgivelsene. Vi jobber sammen med deg for å finne tiltak og gode løsninger.",
+    "beskrivelse_rich_base64": "RXJnb3RlcmFwZXV0ZW5lIGdpciB0amVuZXN0ZXIgdGlsIHBlcnNvbmVyIHNvbSBzdMOlciBpIGZhcmUgZm9yIMOlIGbDpSwgZWxsZXIgaGFyIGbDpXR0IG5lZHNhdHQgZnVua3Nqb25zZXZuZSBvZyBoYXIgZm9rdXMgcMOlIMOlIGdqw7hyZSBodmVyZGFnc2xpdmV0IG11bGlnLiBWaSBrYXJ0bGVnZ2VyIGRpbmUgbXVsaWdoZXRlciBmb3IgYWt0aXZpdGV0IG9nIGRlbHRha2Vsc2UuIE3DpWxldCBtZWQgdGlsYnVkZXQgZXIgYXQgZHUgc2thbCBtZXN0cmUgZWdlbiBodmVyZGFnLCBsZXZlIGV0IGFrdGl2dCBsaXYgb2cgZGVsdGEgaSBzYW1mdW5uZXQuIFZpIGhhciBmb2t1cyBww6UgZGV0IHNvbSBlciB2aWt0aWdlIGFrdGl2aXRldGVyIGkgbGl2ZXQgZGl0dC0gb2cgaHZvcmRhbiBkdSDDuG5za2VyIMOlIGRlbHRhLiBWaSBoYXIga29tcGV0YW5zZSBww6Ugw6Ugc2Ugc2FtbWVuaGVuZ2VuIG1lbGxvbSBwZXJzb24sIGFrdGl2aXRldCBvZyBvbWdpdmVsc2VuZS4gVmkgam9iYmVyIHNhbW1lbiBtZWQgZGVnIGZvciDDpSBmaW5uZSB0aWx0YWsgb2cgZ29kZSBsw7hzbmluZ2VyLg=="
   },
   {
     "id": "000008",
@@ -348,7 +362,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://betania-alta.no/hjerterom/"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Møteplassen - dagtilbud for mennesker med psykiske utfordringer",
+    "beskrivelse_rich_base64": "TcO4dGVwbGFzc2VuIC0gZGFndGlsYnVkIGZvciBtZW5uZXNrZXIgbWVkIHBzeWtpc2tlIHV0Zm9yZHJpbmdlcg=="
   },
   {
     "id": "000009",
@@ -397,7 +413,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://www.statsforvalteren.no/nb/troms-finnmark/vergemal/"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Når små oppgaver blir enklere - og hverdagen litt bedre.",
+    "beskrivelse_rich_base64": "TsOlciBzbcOlIG9wcGdhdmVyIGJsaXIgZW5rbGVyZSAtIG9nIGh2ZXJkYWdlbiBsaXR0IGJlZHJlLg=="
   },
   {
     "id": "000010",
@@ -442,7 +460,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://alta-matstasjon.no/motta-mat/"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Nav og økonomisk sosialhjelp",
+    "beskrivelse_rich_base64": "TmF2IG9nIMO4a29ub21pc2sgc29zaWFsaGplbHA="
   },
   {
     "id": "000011",
@@ -515,7 +535,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://www.alta.kommune.no/legetjenester.544455.no.html"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Frisklivssentral",
+    "beskrivelse_rich_base64": "RnJpc2tsaXZzc2VudHJhbA=="
   },
   {
     "id": "000012",
@@ -560,7 +582,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://www.alta.kommune.no/tjenester/kultur-idrett-og-fritid/aktivby"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Kvalifiseringsprogrammet Kvalifiseringsprogrammet er for deg som ønsker å komme i arbeid, men trenger ekstra oppfølging for å klare det. Målsettingen med programmet er overgang til arbeid som vil kunne bidra til økt livskvalitet for den enkelte, samt gi mulighet til selvforsørgelse. Kvalifiseringsprogram - ALTA KOMMUNE",
+    "beskrivelse_rich_base64": "S3ZhbGlmaXNlcmluZ3Nwcm9ncmFtbWV0IEt2YWxpZmlzZXJpbmdzcHJvZ3JhbW1ldCBlciBmb3IgZGVnIHNvbSDDuG5za2VyIMOlIGtvbW1lIGkgYXJiZWlkLCBtZW4gdHJlbmdlciBla3N0cmEgb3BwZsO4bGdpbmcgZm9yIMOlIGtsYXJlIGRldC4gTcOlbHNldHRpbmdlbiBtZWQgcHJvZ3JhbW1ldCBlciBvdmVyZ2FuZyB0aWwgYXJiZWlkIHNvbSB2aWwga3VubmUgYmlkcmEgdGlsIMO4a3QgbGl2c2t2YWxpdGV0IGZvciBkZW4gZW5rZWx0ZSwgc2FtdCBnaSBtdWxpZ2hldCB0aWwgc2VsdmZvcnPDuHJnZWxzZS4gS3ZhbGlmaXNlcmluZ3Nwcm9ncmFtIC0gQUxUQSBLT01NVU5F"
   },
   {
     "id": "000013",
@@ -603,7 +627,9 @@
         "beskrivelse": "E-post",
         "verdi": "postmottak.fysioterapitjenesten@alta.kommune.no"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Fysioterapi for barn og unge under 16 år",
+    "beskrivelse_rich_base64": "RnlzaW90ZXJhcGkgZm9yIGJhcm4gb2cgdW5nZSB1bmRlciAxNiDDpXI="
   },
   {
     "id": "000014",
@@ -646,7 +672,9 @@
         "beskrivelse": "E-post",
         "verdi": "postmottak.ergoterapitjenesten@alta.kommune.no"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Ergoterapitjenesten gir tilbud til barn og unge som av ulike årsaker har vansker med å utføre daglige aktiviteter.",
+    "beskrivelse_rich_base64": "RXJnb3RlcmFwaXRqZW5lc3RlbiBnaXIgdGlsYnVkIHRpbCBiYXJuIG9nIHVuZ2Ugc29tIGF2IHVsaWtlIMOlcnNha2VyIGhhciB2YW5za2VyIG1lZCDDpSB1dGbDuHJlIGRhZ2xpZ2UgYWt0aXZpdGV0ZXIu"
   },
   {
     "id": "000015",
@@ -703,7 +731,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://www.alta.kommune.no/tjenester/kultur-idrett-og-fritid/alta-kvenske-spraksenter"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Alta bibliotek",
+    "beskrivelse_rich_base64": "QWx0YSBiaWJsaW90ZWs="
   },
   {
     "id": "000016",
@@ -734,7 +764,9 @@
     "status": "aktiv",
     "interne_notater": [
       "Helsestasjon 0-5 år\nTjenesten tilbyr helseundersøkelser, vaksinering, kartlegging, foreldrerådgivning, oppfølging og nettverkssamarbeid til spe- og småbarn.\nHelsestasjon 0-5 år - ALTA KOMMUNE\nSkolehelsetjenesten\nSkolehelsetjenesten er et tilbud for elever, foresatte og ansatte i skolen i tema knyttet til barn og ungdom utvikling og utfordringer.\nHer får du tilbud om helseundersøkelser, helsesamtaler og vaksinasjoner på faste alderstrinn. Elever med ulike utfordringer, og foreldrene deres, kan få oppfølging og veiledning knyttet til tema som for eksempel kosthold, seksualitet, psykisk helse og samspill. Skolehelsetjenesten gir undervisning og helseinformasjon til grupper og klasser. Tjenesten er et lavterskeltilbud, og du kan ta kontakt uten avtale.\nSkolehelsetjeneste - ALTA KOMMUNE\nHelsestasjon for ungdom 13 - 25 år HFU\nHelsestasjon for ungdom tilbyr råd og veiledning.\nVanlige tema kan omhandle kropp og fysisk helse, som seksualitet, menstruasjon, graviditet og kosthold. Andre tema kan være knyttet til nettverk og psykisk helse, som vennskap, parforhold, vonde opplevelser og hvordan du og de rundt deg har det. På helsestasjon for ungdom kan du blant annet få resepter og annen behandling for helseproblemer, prevensjonsveiledning og prevensjon, testing for kjønnssykdommer og graviditetstesting. All testing og behandling mot kjønnssykdommer er gratis. De ansatte, som kan være helsesykepleier og lege, har taushetsplikt.\nHelsestasjon for ungdom - ALTA KOMMUNE\nUtekontakten for ungdom i Alta mellom 13 og 23 år.\nHovedmålet er å gi et tilbud for ungdom som trenger støtte eller hjelp, men som ikke i tilstrekkelig grad nås av andre deler av hjelpeapparatet. Ungdom i Alta må selv ta kontakt med Utekontakten for samtale.\nUtekontakten - ALTA KOMMUNE\nSLT - koordinator\nSLT- står for Samordning av Lokale rus- og kriminalitetsforebyggende Tiltak. Det er et formelt samarbeid mellom Alta kommune og Finnmark politidistrikt. Målgruppen er barn og unge mellom 10 - 25 år.\nSLT-koordinatoren kan hjelpe deg når du\ntrenger råd om hvem du kan henvende deg til når det gjelder forebygging av kriminalitet blant unge i Alta kommune.\ner bekymret for at et barn eller en ungdom står i fare for å utvikle kriminell atferd.\ner bekymret for radikalisering eller voldelig ekstremisme.\nSLT-koordinator - ALTA KOMMUNE\nSe meg tidlig\nSe meg tidlig er en handlingsveileder som skal sikre at barn og unge får den hjelpen de trenger. Det skal være trygt og godt å vokse opp i Alta. Av og til oppstår likevel utfordringer som gjør at ikke alle har det så bra. I vår kommune har vi en egen handlingsveileder som skal sikre at barn og unge får den hjelpen de trenger.\nAlta - Se meg tidlig - \"Se meg tidlig\" Tidlig og tverrfaglig innsats i Alta\nKEF - klinisk ernæringsfysiolog\nKEF arbeider både på individ, gruppe og prosjektnivå, og målgruppen er barn og unge fra 0-20 år, samt gravide. For individuelle konsultasjoner kan det henvises blant annet fra helsesykepleiere, fastlege og jordmor.\nKlinisk ernæringsfysiolog - ALTA KOMMUNE\nOppfølgingstjenesten\nGir råd og veiledning til deg mellom 15 og 21 år, som ikke er i arbeid, i videregående opplæring eller i lære. Det er en gratis rådgivingstjeneste som både ungdom eller foresatt kan kontakte. Oppfølgingstjenesten - Alta videregående skole\nTiltaksteamet\nHovedarbeidsoppgavene til Tiltaksteamet er foreldrestøttende arbeid og oppfølging av barn og unge som har behov for samtaler eller terapi. Disse tiltakene er målrettet i forhold til det vi vet virker for det utfordringsbildet vi ser i Alta i dag.\nTeamet bistår de tre tjenestene i barn- og ungetjenesten; barneverntjenesten, PPT og Helsestasjon og skolehelsetjenesten når deres egne tiltak ikke er tilstrekkelig.\nTiltaksteamet tilbyr\nPMTO - Terapi\nFamilieterapi\nForeldreveiledning\nForeldrekurs\nIndividualsamtaler/støttesamtaler barn og unge\nTIBIR koordinator\nTIBIR nettverksressurs, veiledning og opplæring rådgivere og konsulenter\nStorbakken ungdomssenter\nStorbakken ungdomssenter er en heldøgns institusjon som gir et bo- og omsorgstilbud for ungdommer fra Alta i alderen 13 - 20 år. Det er barneverntjenesten i Alta som tildeler plasser, og det kan enten være som et frivillig hjelpetiltak (§ 4-4, 6. ledd i barnevernsloven), eller etter at kommunen har tatt over omsorgen for barnet/ungdommen (§ 4-12 i samme lov). Storbakken ungdomssenter - ALTA KOMMUNE\nBarneverntjenesten\nBarneverntjenesten er der for å støtte barn og familier når det er behov for ekstra hjelp, omsorg eller beskyttelse.\nNår et barn eller en familie står i en vanskelig situasjon, kan barneverntjenesten tilby ulike former for hjelp og støtte. Målet er å finne løsninger som passer for barnet og familien, og som kan bidra til en positiv utvikling.\nTiltakene tilpasses den enkeltes behov og skal støtte både barnet og foreldrene i hverdagen.\nBarnevern - ALTA KOMMUNE\nFoyer\nFOYER Alta er et kommunalt botilbud for ungdom som trenger ekstra støtte i overgangen til et selvstendig voksenliv.\nTilbudet gir ungdom et trygt sted å bo, kombinert med oppfølging og veiledning tilpasset den enkeltes behov. Målet er å styrke mestring i hverdagen og gi gode forutsetninger for å klare seg selv over tid. FOYER Alta drives av Barn og ungetjenesten i Alta kommune og er en videreføring av DUE-tiltaket.\nUngdom kan søkes inn til tilbudet gjennom Barneverntjenesten, NAV eller Alta bosetting og integrering.\nUng.no\nUng.no er det offentliges informasjonskanal for ungdom. Her kan du få informasjon om dine rettigheter, muligheter og plikter. Her kan du også få svar på spørsmål om familie, venner, kropp, helse, sex, følelser, identitet, forelskelse med mer\nUng.no - offentlig og kvalitetssikret informasjon for ungdom\nKors på halsen\nGratis, trygt og anonymt for deg opp til 18 år. Her kan du prate med eller skrive til voksne som er frivillige i Røde Kors. De hører på det du har å si og hjelper deg om du vil. Du kan også snakke med andre på din egen alder i forumet.\nHjem - Kors på halsen\nSi det med ord\nHer kan du skrive om det som er vanskelig i livet, og få svar innen 24 timer.\nSidetmedord - På Sidetmedord kan du skrive anonymt med en av våre veiledere om hva som helst."
-    ]
+    ],
+    "beskrivelse_plain_text": "Helsestasjon 0-5 år",
+    "beskrivelse_rich_base64": "SGVsc2VzdGFzam9uIDAtNSDDpXI="
   },
   {
     "id": "000017",
@@ -777,7 +809,9 @@
           "Klubben på Skansen aktivitetssenter\nTirsdager i oddetallsuker er det klubb for unge voksne og voksne, med behov for tilrettelegging i hverdagen på grunn av ulike funksjonsvariasjoner. Ulike aktiviteter fra disko i gymsalen med dansekonkurranse til bowling.\nSkansen aktivitetssenter\nSkansen aktivitetssenter har mange ulike arrangementer gjennom hele året, fra dansegalla til ludokveld. Se facebookgruppen «Skansen Aktivitetssenter, Alta» for info om aktiviteter da det legges ut der hver gang.\nFriluftsgruppa - Tilrettelagt gruppe for personer med funksjonsvariasjoner. Gruppen møtes annenhver onsdag. Se facebookgruppen «Fritidsgruppa» for info om oppmøtested da det legges ut der for hver gang.\nAlta IF - FFU - fotball for personer med funksjonsvariasjoner. Trening en gang pr. uke i Finnmarkshallen Link - er ingen informasjo n på lenken FFU-Laget | ALTA IF\nBUL - HU - handball for personer med funksjonsvariasjoner. Trening en gang pr. uke i BUL-hallen Link - finner ikke info om dette\nTurnforeninga - tilrettelagt gruppe - for personer med funksjonsvariasjoner. Trening en gang per uke i Finnmarkshallen. Turnforeningen bruker Spond for informasjon.\nTurneringer og stevner: I tillegg til ukentlige treninger deltar fotballgruppen, handballgruppen og turngruppen på turninger og stevner, både i Alta og utenbys. Samtlige lag har både pårørende, treningskompiser og andre ledsagere og støttepersoner som deltar på treningene. Hvert andre år arrangeres Stjernehelg i Alta som er et tilrettelagt arrangement for målgruppen."
         ]
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Demenskoret",
+    "beskrivelse_rich_base64": "RGVtZW5za29yZXQ="
   },
   {
     "id": "000018",
@@ -814,7 +848,9 @@
           "Alta og Hammerfest familievernkontor\nFamilieterapi er et tilbud der dere som familie sammen kan snakke med og få hjelp fra en terapeut. Familieterapi tilbyr hjelp til å avdekke negative familiemønstre og til å endre disse mønstrene.\nEksempler på situasjoner der familieterapi kan være til hjelp\nsamspill i familien\nførstegangsforeldre som skal omstille seg og ta ansvar og omsorg\nutfordringer med dine, mine og våre barn\nhjelp til foreldresamarbeid mellom ekstpartnere\nkonflikter mellom ulike kulturer\ntilbud til foreldre og barn ved fysisk eller psykisk vold i familien\nsykdom og tap\ntvangsekteskap og annen skadelig praksis\nFamilieterapi på familievernkontoret | Bufdir\nPMTO - foreldregrupper\nHverdagen som foreldre kan være utfordrende. For eksempel morgenstell, påkledning, lekser, legging og måltider. Mange kan føle seg både usikker og fortvilet.\nDerfor inviterer Alta kommune til gratis gruppekurs der du får støtte og råd, samt at du får møte andre i samme situasjon. Du lærer helt konkret hvordan du går frem for å få til et bedre samarbeid mellom deg og barnet ditt, og du får tilgang til din egen «verktøykasse». Foreldreverktøyene som læres, vil kunne brukes på ulike måter gjennom hele barnets oppvekst.\nPMTO - foreldregrupper er i regi av Tiltaksteamet i Alta kommune\nForeldrekurs - ALTA KOMMUNE\nPMTO - rådgivning\nForeldreveiledningen Tidlig innsats for barn og unge i risiko (TIBIR) tar sikte på å hjelpe familien på et så tidlig tidspunkt som mulig. Gjennom råd og veiledning kan foreldrene få hjelp til å forebygge reguleringsvansker og bidra til en positiv utvikling hos barnet. Tiltaket gjelder barn i alderen 3 - 12 år og foreldrene deres.\nTIBIR (Tidlig innsats for barn i risiko) foreldrerådgivning | Bufdir\nTidlig innsats for barn i risiko (TIBIR) | Nasjonalt utviklingssenter for barn og unge\nPMTO - rådgivning er i regi av\nHelsestasjon og skolehelsetjenesten\nBarneverntjenesten\nTiltaksteamet"
         ]
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Krisesenter",
+    "beskrivelse_rich_base64": "S3Jpc2VzZW50ZXI="
   },
   {
     "id": "000019",
@@ -855,7 +891,9 @@
         "beskrivelse": "E-post",
         "verdi": "post.nnorge@veiledningssenter.no"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Sanitetskvinnenes veiledningssenter for pårørende i Nord-Norge",
+    "beskrivelse_rich_base64": "U2FuaXRldHNrdmlubmVuZXMgdmVpbGVkbmluZ3NzZW50ZXIgZm9yIHDDpXLDuHJlbmRlIGkgTm9yZC1Ob3JnZQ=="
   },
   {
     "id": "000020",
@@ -884,7 +922,9 @@
     "status": "aktiv",
     "interne_notater": [
       "Boligservicekontoret\nBoligservicekontoret tilbyr råd, veiledning og informasjon om bolig, herunder startlån, tilskudd til etablering, tilskudd til tilpasning, bostøtte, kommunale boliger og søknadsprosesser.\nBoligservicekontoret kan sammen med deg kartlegge dine muligheter for å selv skaffe eid eller leid bolig, og videre veilede deg på hvordan du går fram.\nLink til Boligservicekontoret på Alta kommunes hjemmeside: Boligservicekontoret - en dør inn - ALTA KOMMUNE\nPå hjemmesiden vår finner du informasjon angående våre ordninger, der kan du også søke digitalt om bostøtte, startlån, individuelt tilpasset bistand og kommunal gjennomgangsbolig. I boksene på hjemmesiden finner du informasjon om, og vilkår for de ulike ordningene.\nOm du ikke finner det du leter etter, eller av andre grunner ønsker at Boligservicekontoret kontakter deg så kan du bruke vårt digitale henvendelsesskjema. Det finner du her: Henvendelsesskjema boligservicekontoret - ALTA KOMMUNE\nMidlertidig botilbud Nav - nødsituasjon\nNav skal finne et midlertidig botilbud til deg i akutte situasjoner hvis du ikke klarer dette selv. Slike nødssituasjoner kan være ved brann, familie- eller samlivsbrudd eller hvis du har blitt kastet ut fra stedet du bodde.\nMidlertidig botilbud/nødsituasjon - ALTA KOMMUNE\nHvis du ikke har penger til å betale for den midlertidige boligen selv, kan du søke om økonomisk sosialhjelp.\nØkonomisk sosialhjelp - nav.no"
-    ]
+    ],
+    "beskrivelse_plain_text": "Boligservicekontoret",
+    "beskrivelse_rich_base64": "Qm9saWdzZXJ2aWNla29udG9yZXQ="
   },
   {
     "id": "000021",
@@ -950,7 +990,9 @@
         "lov": "Pasient- og brukerrettighetsloven  a. Helse- og omsorgstjenesteloven § 3-2 første ledd nr 6, bokstav b, jf. § 3-1.",
         "paragraf": "§ 2-1"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Tjenesten medvirker til en aktiv og meningsfull fritid, deltakelse i kultur- og fritidsaktiviteter og til å bli inkludert i frivillige lag og organisasjoner.",
+    "beskrivelse_rich_base64": "VGplbmVzdGVuIG1lZHZpcmtlciB0aWwgZW4gYWt0aXYgb2cgbWVuaW5nc2Z1bGwgZnJpdGlkLCBkZWx0YWtlbHNlIGkga3VsdHVyLSBvZyBmcml0aWRzYWt0aXZpdGV0ZXIgb2cgdGlsIMOlIGJsaSBpbmtsdWRlcnQgaSBmcml2aWxsaWdlIGxhZyBvZyBvcmdhbmlzYXNqb25lci4="
   },
   {
     "id": "000022",
@@ -1015,7 +1057,9 @@
         "lov": "Pasient- og brukerrettighetsloven  a Helse- og omsorgstjenesteloven § 3-2 første ledd nr 6, bokstav b, jf. § 3-1.",
         "paragraf": "§ 2-1"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Tjenesten medvirker til en aktiv og meningsfull fritid, deltakelse i kultur- og fritidsaktiviteter og til å bli inkludert i frivillige lag og organisasjoner.",
+    "beskrivelse_rich_base64": "VGplbmVzdGVuIG1lZHZpcmtlciB0aWwgZW4gYWt0aXYgb2cgbWVuaW5nc2Z1bGwgZnJpdGlkLCBkZWx0YWtlbHNlIGkga3VsdHVyLSBvZyBmcml0aWRzYWt0aXZpdGV0ZXIgb2cgdGlsIMOlIGJsaSBpbmtsdWRlcnQgaSBmcml2aWxsaWdlIGxhZyBvZyBvcmdhbmlzYXNqb25lci4="
   },
   {
     "id": "000023",
@@ -1070,7 +1114,9 @@
           "Før du søker!\nFør du får tilbud på Skansen aktivitetssenter kan Tjenestekontoret hjelpe deg med å komme i kontakt med andre aktuelle instanser som kan vurderes, for eksempel NAV for veiledning vedrørende arbeidsrelatert aktivitet.\nBeskrivelse av tjenesten\nSkansen aktivitetssenter gir tjenester til personer med ulik grad av fysiske og kognitive utfordringer og med behov for tilrettelagt aktivitets- og arbeidstilbud. Tjenesten skal bidra til at den enkelte får en forutsigbar og meningsfull hverdag sammen med andre, og muligheten til å utvikle og vedlikeholde sine ferdigheter. Tilbudet innebærer varierte aktiviteter og arbeidsoppgaver tilrettelagt den enkeltes funksjonsnivå; fra arbeidsrelaterte oppgaver til hobbyaktivitet og adl-trening (trene på dagliglivets gjøremål). Det stilles ikke krav til produksjon og aktivitetene blir individuelt tilpasset.\nLokalene er godt tilrettelagt for ulike tilbud/aktiviteter ved at aktivitetssenteret er inndelt i flere avdelinger og omfatter blant annet aktivitetsavdeling, sanserom, vaskeri, verksted, vedproduksjon, kunst/forming, multimedia, kantine, kjøkken, treningskjøkken med mer.\nTilbudet krever at du som utgangspunkt må komme deg til og fra aktivitetssenteret på egenhånd. For deg som ikke klarer det, har vi en transportordning. Dette er behovsprøvd.\nVi prøver å ha sunn og rimelig mat, og det serveres varmmat enkelte dager i uken.\nDriften og åpningstider er tilpasset behovet.\nMålgruppe\nPersoner med ulik grad av fysisk og kognitiv funksjonsnedsettelse, med så omfattende bistandsbehov at de faller utenfor andre typer arbeidsmarkedstiltak, som for eksempel varig tilrettelagt arbeid.\nTildelingskriterier\ndu bor i Alta kommune\ndu har behov for tilrettelegging, arbeidstrening og sysselsetting på dagtid\ndet er tverrfaglig vurdert at du vil kunne nyttiggjøre deg av tilbudet\ndu må fungere i gruppe sammen med andre tjenestemottakere\ndu er innvilget 100 prosent uføretrygd\nInformasjon om dagaktivitetstilbud\nTa kontakt med Tjenestekontoret dersom du tenker at tilbud på Skansen er ønskelig. Hvis du får et dagaktivitetstilbud, vil du motta et informasjonsskriv der du får opplysninger om hvor du vil få tjenesten, hvor mange dager du har fått og når du kan forvente at tjenesten iverksettes. Tjenesten evalueres kontinuerlig, minimum en gang per år.\nDette kan du forvente\ntjenesten tilrettelegges på en slik måte at dette bidrar til en verdig, trygg og meningsfull hverdag.\ntjenesten blir evaluert jevnlig og blir justert i tråd med vurderingen\ntjenesten blir avsluttet eller redusert hvis du ikke benytter deg av tilbudet\nVåre forventninger\ndu kommer til avtalt tidspunkt\ndu eller dine pårørende gir beskjed hvis du ikke kommer (fravær)\ndu deltar i Skansen aktivitetssenter sine aktiviteter så langt du kan.\nEvaluering\nTjenesten vil bli evaluert jevnlig og ved behov, for å finne ut\nom du benytter deg av tjenesten\nom tjenesten er nyttig for deg?\nom det er endringer i din helsetilstand eller ditt funksjonsnivå som vil få betydning for din deltakelse ved Skansen aktivitetssenter\nPris for tjenestenTjenesten er gratis, men du må betale for maten.\nLovhjemmel Pasient- og brukerrettighetsloven § 2-1a Helse- og omsorgstjenesteloven § 3-2 første ledd nr.6 bokstav b"
         ]
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Formålet med tjenesten dagaktivitetstilbud kan være å gi mening, mestring og gode opplevelser, samt hjelp til egenomsorg, sosial støtte, aktivisering og opplæring i dagliglivets gjøremål. I Helse og omsorg i Alta kommune har vi tre ulike dagaktivitetstilbud.",
+    "beskrivelse_rich_base64": "Rm9ybcOlbGV0IG1lZCB0amVuZXN0ZW4gZGFnYWt0aXZpdGV0c3RpbGJ1ZCBrYW4gdsOmcmUgw6UgZ2kgbWVuaW5nLCBtZXN0cmluZyBvZyBnb2RlIG9wcGxldmVsc2VyLCBzYW10IGhqZWxwIHRpbCBlZ2Vub21zb3JnLCBzb3NpYWwgc3TDuHR0ZSwgYWt0aXZpc2VyaW5nIG9nIG9wcGzDpnJpbmcgaSBkYWdsaWdsaXZldHMgZ2rDuHJlbcOlbC4gSSBIZWxzZSBvZyBvbXNvcmcgaSBBbHRhIGtvbW11bmUgaGFyIHZpIHRyZSB1bGlrZSBkYWdha3Rpdml0ZXRzdGlsYnVkLg=="
   },
   {
     "id": "000024",
@@ -1129,7 +1175,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://skjema.no/alta/700903"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Hvis du har et åpenbart behov for ledsager for å kunne gå på kultur- og fritidsarrangementer, kan du søke Alta kommune om ledsagerbevis. Vi harhar ingen nedre aldersgrense for innvilgelse av ledsagerbevis.",
+    "beskrivelse_rich_base64": "SHZpcyBkdSBoYXIgZXQgw6VwZW5iYXJ0IGJlaG92IGZvciBsZWRzYWdlciBmb3Igw6Uga3VubmUgZ8OlIHDDpSBrdWx0dXItIG9nIGZyaXRpZHNhcnJhbmdlbWVudGVyLCBrYW4gZHUgc8O4a2UgQWx0YSBrb21tdW5lIG9tIGxlZHNhZ2VyYmV2aXMuIFZpIGhhcmhhciBpbmdlbiBuZWRyZSBhbGRlcnNncmVuc2UgZm9yIGlubnZpbGdlbHNlIGF2IGxlZHNhZ2VyYmV2aXMu"
   },
   {
     "id": "000025",
@@ -1164,7 +1212,9 @@
     "vedtak": {
       "krever_søknad": true,
       "søknadsvei": "Kontakt Tjenestekontoret for informasjon om søknad."
-    }
+    },
+    "beskrivelse_plain_text": "Tilrettelagt transport (TT) er et tilbud for personer som på grunn av sykdom eller nedsatt funksjonsevne ikke kan bruke ordinær kollektivtransport. Ordningen er ikke en lovfestet individuell rett. TT-ordningen gir transport til innbyggere med varig funksjonshemming som helt eller delvis er avskåret fra å bruke kollektivtilbudet. Fylkeskommunen har ansvar for ordningen og fastsetter kriteriene for hvem som kan få TT-kort.",
+    "beskrivelse_rich_base64": "VGlscmV0dGVsYWd0IHRyYW5zcG9ydCAoVFQpIGVyIGV0IHRpbGJ1ZCBmb3IgcGVyc29uZXIgc29tIHDDpSBncnVubiBhdiBzeWtkb20gZWxsZXIgbmVkc2F0dCBmdW5rc2pvbnNldm5lIGlra2Uga2FuIGJydWtlIG9yZGluw6ZyIGtvbGxla3RpdnRyYW5zcG9ydC4gT3JkbmluZ2VuIGVyIGlra2UgZW4gbG92ZmVzdGV0IGluZGl2aWR1ZWxsIHJldHQuIFRULW9yZG5pbmdlbiBnaXIgdHJhbnNwb3J0IHRpbCBpbm5ieWdnZXJlIG1lZCB2YXJpZyBmdW5rc2pvbnNoZW1taW5nIHNvbSBoZWx0IGVsbGVyIGRlbHZpcyBlciBhdnNrw6VyZXQgZnJhIMOlIGJydWtlIGtvbGxla3RpdnRpbGJ1ZGV0LiBGeWxrZXNrb21tdW5lbiBoYXIgYW5zdmFyIGZvciBvcmRuaW5nZW4gb2cgZmFzdHNldHRlciBrcml0ZXJpZW5lIGZvciBodmVtIHNvbSBrYW4gZsOlIFRULWtvcnQu"
   },
   {
     "id": "000026",
@@ -1232,7 +1282,9 @@
         "beskrivelse": "Lenke i dokument",
         "url": "https://lovdata.no/dokument/SF/forskrift/2016-03-18-264?q=forskrift%20om%20parkering"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Parkeringstillatelse kan gis til fører eller passasjer som har store vansker med å gå, og som derfor har behov for enklere parkering ved bolig, arbeid eller andre aktiviteter.",
+    "beskrivelse_rich_base64": "UGFya2VyaW5nc3RpbGxhdGVsc2Uga2FuIGdpcyB0aWwgZsO4cmVyIGVsbGVyIHBhc3Nhc2plciBzb20gaGFyIHN0b3JlIHZhbnNrZXIgbWVkIMOlIGfDpSwgb2cgc29tIGRlcmZvciBoYXIgYmVob3YgZm9yIGVua2xlcmUgcGFya2VyaW5nIHZlZCBib2xpZywgYXJiZWlkIGVsbGVyIGFuZHJlIGFrdGl2aXRldGVyLg=="
   },
   {
     "id": "000027",
@@ -1296,7 +1348,9 @@
         "lov": "Pasient- og brukerrettighetsloven  a Helse- og omsorgstjenesteloven § 3-2 første ledd nr 6, bokstav b, jf. § 3-1",
         "paragraf": "§ 2-1"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Alta kommune vil gjennom denne tjenesten bidra til at du er mest mulig selvstendig og selvhjulpen i daglige gjøremål ved hjelp av dine egne ressurser.",
+    "beskrivelse_rich_base64": "QWx0YSBrb21tdW5lIHZpbCBnamVubm9tIGRlbm5lIHRqZW5lc3RlbiBiaWRyYSB0aWwgYXQgZHUgZXIgbWVzdCBtdWxpZyBzZWx2c3RlbmRpZyBvZyBzZWx2aGp1bHBlbiBpIGRhZ2xpZ2UgZ2rDuHJlbcOlbCB2ZWQgaGplbHAgYXYgZGluZSBlZ25lIHJlc3N1cnNlci4="
   },
   {
     "id": "000028",
@@ -1368,7 +1422,9 @@
         "lov": "Helse- og omsorgstjenesteloven  første ledd nr.6, bokstav b. jf. §3-1",
         "paragraf": "§ 3-2"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Praktisk bistand er hjelp og tilrettelegging av nødvendige hverdagsaktiviteter og daglige gjøremål hjemme hos deg. Hjelpen gis som hovedregel sammen med deg, og den tilpasses de oppgavene du ikke mestrer selv.",
+    "beskrivelse_rich_base64": "UHJha3Rpc2sgYmlzdGFuZCBlciBoamVscCBvZyB0aWxyZXR0ZWxlZ2dpbmcgYXYgbsO4ZHZlbmRpZ2UgaHZlcmRhZ3Nha3Rpdml0ZXRlciBvZyBkYWdsaWdlIGdqw7hyZW3DpWwgaGplbW1lIGhvcyBkZWcuIEhqZWxwZW4gZ2lzIHNvbSBob3ZlZHJlZ2VsIHNhbW1lbiBtZWQgZGVnLCBvZyBkZW4gdGlscGFzc2VzIGRlIG9wcGdhdmVuZSBkdSBpa2tlIG1lc3RyZXIgc2Vsdi4="
   },
   {
     "id": "000029",
@@ -1434,7 +1490,9 @@
         "lov": "Helse- og omsorgstjenesteloven  - 8",
         "paragraf": "§ 3"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Brukerstyrt personlig assistanse (BPA) er ikke en egen tjeneste. Det er en måte å organisere personlig assistanse på, som kan omfatte fritidskontakt, praktisk bistand og opplæring, samt avlastning for foreldre med hjemmeboende barn under 18 år med nedsatt funksjonsevne.",
+    "beskrivelse_rich_base64": "QnJ1a2Vyc3R5cnQgcGVyc29ubGlnIGFzc2lzdGFuc2UgKEJQQSkgZXIgaWtrZSBlbiBlZ2VuIHRqZW5lc3RlLiBEZXQgZXIgZW4gbcOldGUgw6Ugb3JnYW5pc2VyZSBwZXJzb25saWcgYXNzaXN0YW5zZSBww6UsIHNvbSBrYW4gb21mYXR0ZSBmcml0aWRza29udGFrdCwgcHJha3Rpc2sgYmlzdGFuZCBvZyBvcHBsw6ZyaW5nLCBzYW10IGF2bGFzdG5pbmcgZm9yIGZvcmVsZHJlIG1lZCBoamVtbWVib2VuZGUgYmFybiB1bmRlciAxOCDDpXIgbWVkIG5lZHNhdHQgZnVua3Nqb25zZXZuZS4="
   },
   {
     "id": "000030",
@@ -1485,7 +1543,9 @@
         "lov": "Pasient - og brukerrettighetsloven  a). Helse- og omsorgstjenesteloven § 3-2 første ledd nr. 6 bokstav a og b",
         "paragraf": "§ 2-1"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Matombringing er et tilbud for hjemmeboende eldre og personer med funksjonsnedsettelser som av ulike årsaker ikke klarer å lage middag selv. Formålet er å sikre god ernæring og forebygge underernæring. Tjenesten må søkes om og det vil bli utført en individuell vurdering. Om du får tilbud om matombringing får du et brev om det.",
+    "beskrivelse_rich_base64": "TWF0b21icmluZ2luZyBlciBldCB0aWxidWQgZm9yIGhqZW1tZWJvZW5kZSBlbGRyZSBvZyBwZXJzb25lciBtZWQgZnVua3Nqb25zbmVkc2V0dGVsc2VyIHNvbSBhdiB1bGlrZSDDpXJzYWtlciBpa2tlIGtsYXJlciDDpSBsYWdlIG1pZGRhZyBzZWx2LiBGb3Jtw6VsZXQgZXIgw6Ugc2lrcmUgZ29kIGVybsOmcmluZyBvZyBmb3JlYnlnZ2UgdW5kZXJlcm7DpnJpbmcuIFRqZW5lc3RlbiBtw6Ugc8O4a2VzIG9tIG9nIGRldCB2aWwgYmxpIHV0ZsO4cnQgZW4gaW5kaXZpZHVlbGwgdnVyZGVyaW5nLiBPbSBkdSBmw6VyIHRpbGJ1ZCBvbSBtYXRvbWJyaW5naW5nIGbDpXIgZHUgZXQgYnJldiBvbSBkZXQu"
   },
   {
     "id": "000031",
@@ -1547,7 +1607,9 @@
         "lov": "Pasient og brukerrettighetsloven § og 2-5 b. Helse og omsorgstjenesteloven § 7-2",
         "paragraf": "§ 2-5"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Hvis du har behov for langvarige og koordinerte helse- og omsorgstjenester, har du rett til å få utarbeidet en individuell plan hvis du ønsker det. Planen skal beskrive dine mål, og hvordan disse målene skal nås.",
+    "beskrivelse_rich_base64": "SHZpcyBkdSBoYXIgYmVob3YgZm9yIGxhbmd2YXJpZ2Ugb2cga29vcmRpbmVydGUgaGVsc2UtIG9nIG9tc29yZ3N0amVuZXN0ZXIsIGhhciBkdSByZXR0IHRpbCDDpSBmw6UgdXRhcmJlaWRldCBlbiBpbmRpdmlkdWVsbCBwbGFuIGh2aXMgZHUgw7huc2tlciBkZXQuIFBsYW5lbiBza2FsIGJlc2tyaXZlIGRpbmUgbcOlbCwgb2cgaHZvcmRhbiBkaXNzZSBtw6VsZW5lIHNrYWwgbsOlcy4="
   },
   {
     "id": "000032",
@@ -1603,7 +1665,9 @@
         "lov": "Helse- og omsorgstjenesteloven  - 2a",
         "paragraf": "§7"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Familier som har eller venter barn med alvorlig sykdom, skade eller nedsatt funksjonsevne, og som vil ha behov for langvarige og sammensatte helse- og omsorgstjenester og andre velferdstjenester, kan ha rett til barnekoordinator.",
+    "beskrivelse_rich_base64": "RmFtaWxpZXIgc29tIGhhciBlbGxlciB2ZW50ZXIgYmFybiBtZWQgYWx2b3JsaWcgc3lrZG9tLCBza2FkZSBlbGxlciBuZWRzYXR0IGZ1bmtzam9uc2V2bmUsIG9nIHNvbSB2aWwgaGEgYmVob3YgZm9yIGxhbmd2YXJpZ2Ugb2cgc2FtbWVuc2F0dGUgaGVsc2UtIG9nIG9tc29yZ3N0amVuZXN0ZXIgb2cgYW5kcmUgdmVsZmVyZHN0amVuZXN0ZXIsIGthbiBoYSByZXR0IHRpbCBiYXJuZWtvb3JkaW5hdG9yLg=="
   },
   {
     "id": "000033",
@@ -1641,7 +1705,9 @@
     "vedtak": {
       "krever_søknad": true,
       "søknadsvei": "Kontakt Tjenestekontoret for informasjon om søknad."
-    }
+    },
+    "beskrivelse_plain_text": "Før du søker!",
+    "beskrivelse_rich_base64": "RsO4ciBkdSBzw7hrZXIh"
   },
   {
     "id": "000034",
@@ -1676,7 +1742,9 @@
     "vedtak": {
       "krever_søknad": true,
       "søknadsvei": "Kontakt Tjenestekontoret for informasjon om søknad."
-    }
+    },
+    "beskrivelse_plain_text": "Opplæring og veiledning er et tiltak rettet mot pårørende som utfører særlig tyngende omsorgsarbeid. Formålet er å støtte pårørende i rollen som omsorgsutøver, og gi kunnskap og veiledning slik at omsorgsoppgavene kan gjøres på en trygg og forsvarlig måte.",
+    "beskrivelse_rich_base64": "T3BwbMOmcmluZyBvZyB2ZWlsZWRuaW5nIGVyIGV0IHRpbHRhayByZXR0ZXQgbW90IHDDpXLDuHJlbmRlIHNvbSB1dGbDuHJlciBzw6ZybGlnIHR5bmdlbmRlIG9tc29yZ3NhcmJlaWQuIEZvcm3DpWxldCBlciDDpSBzdMO4dHRlIHDDpXLDuHJlbmRlIGkgcm9sbGVuIHNvbSBvbXNvcmdzdXTDuHZlciwgb2cgZ2kga3VubnNrYXAgb2cgdmVpbGVkbmluZyBzbGlrIGF0IG9tc29yZ3NvcHBnYXZlbmUga2FuIGdqw7hyZXMgcMOlIGVuIHRyeWdnIG9nIGZvcnN2YXJsaWcgbcOldGUu"
   },
   {
     "id": "000035",
@@ -1737,7 +1805,9 @@
       {
         "lov": "Finner ingen skjema Omsorgsstønad - ALTA KOMMUNE"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Omsorgsstønad er en økonomisk godtgjøring du kan søke hvis du som forelder, ektefelle eller annen nærstående, har særlig tyngende omsorgsarbeid. Innvilgelse av omsorgsstønad er ikke et rettskrav, men kommunen har plikt til å ha en slik tjeneste. Retten til omsorgsstønad inntrer bare for omsorgsarbeid som kommunen ellers ville utført.",
+    "beskrivelse_rich_base64": "T21zb3Jnc3N0w7huYWQgZXIgZW4gw7hrb25vbWlzayBnb2R0Z2rDuHJpbmcgZHUga2FuIHPDuGtlIGh2aXMgZHUgc29tIGZvcmVsZGVyLCBla3RlZmVsbGUgZWxsZXIgYW5uZW4gbsOmcnN0w6VlbmRlLCBoYXIgc8OmcmxpZyB0eW5nZW5kZSBvbXNvcmdzYXJiZWlkLiBJbm52aWxnZWxzZSBhdiBvbXNvcmdzc3TDuG5hZCBlciBpa2tlIGV0IHJldHRza3JhdiwgbWVuIGtvbW11bmVuIGhhciBwbGlrdCB0aWwgw6UgaGEgZW4gc2xpayB0amVuZXN0ZS4gUmV0dGVuIHRpbCBvbXNvcmdzc3TDuG5hZCBpbm50cmVyIGJhcmUgZm9yIG9tc29yZ3NhcmJlaWQgc29tIGtvbW11bmVuIGVsbGVycyB2aWxsZSB1dGbDuHJ0Lg=="
   },
   {
     "id": "000036",
@@ -1800,7 +1870,9 @@
         "Voksne",
         "Hvor mye avlastning du eller dere får, avhenger av behovet. Avlastningen kan variere fra noen få timer i uken til hele dager eller helger, og i enkelte tilfeller flere døgn i måneden. For personer med et langvarig og omfattende behov kan tilbudet justeres til inntil én uke på avdeling og tre uker hjemme, eller to uker på avdeling og seks uker hjemme."
       ]
-    }
+    },
+    "beskrivelse_plain_text": "Kommunen tilbyr avlastning til deg som har et stort omsorgsansvar for en annen person. Avlastning skal gi deg mulighet til pauser i hverdagen, slik at du får tid til egne behov, fritid og deltakelse i vanlige aktiviteter.",
+    "beskrivelse_rich_base64": "S29tbXVuZW4gdGlsYnlyIGF2bGFzdG5pbmcgdGlsIGRlZyBzb20gaGFyIGV0IHN0b3J0IG9tc29yZ3NhbnN2YXIgZm9yIGVuIGFubmVuIHBlcnNvbi4gQXZsYXN0bmluZyBza2FsIGdpIGRlZyBtdWxpZ2hldCB0aWwgcGF1c2VyIGkgaHZlcmRhZ2VuLCBzbGlrIGF0IGR1IGbDpXIgdGlkIHRpbCBlZ25lIGJlaG92LCBmcml0aWQgb2cgZGVsdGFrZWxzZSBpIHZhbmxpZ2UgYWt0aXZpdGV0ZXIu"
   },
   {
     "id": "000037",
@@ -1863,7 +1935,9 @@
         "lov": "Helse- og omsorgstjenesteloven  første ledd nr. 6, bokstav a jf. §3-1",
         "paragraf": "§ 3-2"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Helsetjenester i hjemmet kan gis til deg som bor i, eller midlertidig oppholder deg i kommunen, og som på grunn av sykdom eller nedsatt funksjonsevne ikke selv kan oppsøke nødvendig helsehjelp. Tjenestene gis når det er behov for helsehjelp i hjemmet. Tildeling av tjenester skjer etter en helhetlig vurdering av helsetilstand, funksjonsnivå og individuelle behov. I vurderingen legges det vekt på dine ressurser og på at du er med og medvirker i beslutninger som gjelder deg.",
+    "beskrivelse_rich_base64": "SGVsc2V0amVuZXN0ZXIgaSBoamVtbWV0IGthbiBnaXMgdGlsIGRlZyBzb20gYm9yIGksIGVsbGVyIG1pZGxlcnRpZGlnIG9wcGhvbGRlciBkZWcgaSBrb21tdW5lbiwgb2cgc29tIHDDpSBncnVubiBhdiBzeWtkb20gZWxsZXIgbmVkc2F0dCBmdW5rc2pvbnNldm5lIGlra2Ugc2VsdiBrYW4gb3Bwc8O4a2UgbsO4ZHZlbmRpZyBoZWxzZWhqZWxwLiBUamVuZXN0ZW5lIGdpcyBuw6VyIGRldCBlciBiZWhvdiBmb3IgaGVsc2VoamVscCBpIGhqZW1tZXQuIFRpbGRlbGluZyBhdiB0amVuZXN0ZXIgc2tqZXIgZXR0ZXIgZW4gaGVsaGV0bGlnIHZ1cmRlcmluZyBhdiBoZWxzZXRpbHN0YW5kLCBmdW5rc2pvbnNuaXbDpSBvZyBpbmRpdmlkdWVsbGUgYmVob3YuIEkgdnVyZGVyaW5nZW4gbGVnZ2VzIGRldCB2ZWt0IHDDpSBkaW5lIHJlc3N1cnNlciBvZyBww6UgYXQgZHUgZXIgbWVkIG9nIG1lZHZpcmtlciBpIGJlc2x1dG5pbmdlciBzb20gZ2plbGRlciBkZWcu"
   },
   {
     "id": "000038",
@@ -1928,7 +2002,9 @@
         "lov": "Helse- og omsorgstjenesteloven  første ledd nr. 6, bokstav a jf. §3-1",
         "paragraf": "§ 3-2"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Tverrfaglig Innsatsteam er aktuelt i en periode dersom du har behov for tett tverrfaglig oppfølging i hjemmet.",
+    "beskrivelse_rich_base64": "VHZlcnJmYWdsaWcgSW5uc2F0c3RlYW0gZXIgYWt0dWVsdCBpIGVuIHBlcmlvZGUgZGVyc29tIGR1IGhhciBiZWhvdiBmb3IgdGV0dCB0dmVycmZhZ2xpZyBvcHBmw7hsZ2luZyBpIGhqZW1tZXQu"
   },
   {
     "id": "000039",
@@ -1966,7 +2042,9 @@
     "vedtak": {
       "krever_søknad": true,
       "søknadsvei": "Kontakt Tjenestekontoret for informasjon om søknad."
-    }
+    },
+    "beskrivelse_plain_text": "Kommunen har et team som tilbyr oppfølging av hjemmeboende pasienter med behov for lindrende behandling og omsorg i livets siste fase. Teamet er tverrfaglig og består av sykepleier, helsefagarbeider, ergoterapeut, fysioterapeut, samhandlingskoordinator og kreftkoordinator.",
+    "beskrivelse_rich_base64": "S29tbXVuZW4gaGFyIGV0IHRlYW0gc29tIHRpbGJ5ciBvcHBmw7hsZ2luZyBhdiBoamVtbWVib2VuZGUgcGFzaWVudGVyIG1lZCBiZWhvdiBmb3IgbGluZHJlbmRlIGJlaGFuZGxpbmcgb2cgb21zb3JnIGkgbGl2ZXRzIHNpc3RlIGZhc2UuIFRlYW1ldCBlciB0dmVycmZhZ2xpZyBvZyBiZXN0w6VyIGF2IHN5a2VwbGVpZXIsIGhlbHNlZmFnYXJiZWlkZXIsIGVyZ290ZXJhcGV1dCwgZnlzaW90ZXJhcGV1dCwgc2FtaGFuZGxpbmdza29vcmRpbmF0b3Igb2cga3JlZnRrb29yZGluYXRvci4="
   },
   {
     "id": "000040",
@@ -2060,7 +2138,9 @@
         "beskrivelse": "E-post",
         "verdi": "lavterskelpsykiskhelse@alta.kommune.no"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Psykisk helse og rus gir ulike hjelpetilbud i form av individuell oppfølging, praktisk og helhetlig støtte, samt gruppetilbud. Vi har fokus på å styrke dine ressurser, fremme mestring og øke selvstendigheten. Sammen finner vi veien videre ut fra dine ønsker, mål og muligheter. Vi skal sikre at alle som oppholder seg i kommunen og har behov for helse- og omsorgstjenester innen psykisk helse og/eller rus, får et forsvarlig tilbud i tråd med gjeldende lovverk.",
+    "beskrivelse_rich_base64": "UHN5a2lzayBoZWxzZSBvZyBydXMgZ2lyIHVsaWtlIGhqZWxwZXRpbGJ1ZCBpIGZvcm0gYXYgaW5kaXZpZHVlbGwgb3BwZsO4bGdpbmcsIHByYWt0aXNrIG9nIGhlbGhldGxpZyBzdMO4dHRlLCBzYW10IGdydXBwZXRpbGJ1ZC4gVmkgaGFyIGZva3VzIHDDpSDDpSBzdHlya2UgZGluZSByZXNzdXJzZXIsIGZyZW1tZSBtZXN0cmluZyBvZyDDuGtlIHNlbHZzdGVuZGlnaGV0ZW4uIFNhbW1lbiBmaW5uZXIgdmkgdmVpZW4gdmlkZXJlIHV0IGZyYSBkaW5lIMO4bnNrZXIsIG3DpWwgb2cgbXVsaWdoZXRlci4gVmkgc2thbCBzaWtyZSBhdCBhbGxlIHNvbSBvcHBob2xkZXIgc2VnIGkga29tbXVuZW4gb2cgaGFyIGJlaG92IGZvciBoZWxzZS0gb2cgb21zb3Jnc3RqZW5lc3RlciBpbm5lbiBwc3lraXNrIGhlbHNlIG9nL2VsbGVyIHJ1cywgZsOlciBldCBmb3JzdmFybGlnIHRpbGJ1ZCBpIHRyw6VkIG1lZCBnamVsZGVuZGUgbG92dmVyay4="
   },
   {
     "id": "000041",
@@ -2132,7 +2212,9 @@
       {
         "lov": "INSTITUSJONS-OPPHOLD OG BOLIG SÆRSKILT TILRETTELAGT FOR HELDØGNS TJENESTER (HDO-BOLIG) TRINN 4 - 6"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "D-FACT Alta er et fleksibelt og aktivt oppsøkende behandlingsteam, som gir langvarig oppfølging og behandling til mennesker med alvorlig psykisk lidelse og/eller alvorlig ruslidelse.",
+    "beskrivelse_rich_base64": "RC1GQUNUIEFsdGEgZXIgZXQgZmxla3NpYmVsdCBvZyBha3RpdnQgb3Bwc8O4a2VuZGUgYmVoYW5kbGluZ3N0ZWFtLCBzb20gZ2lyIGxhbmd2YXJpZyBvcHBmw7hsZ2luZyBvZyBiZWhhbmRsaW5nIHRpbCBtZW5uZXNrZXIgbWVkIGFsdm9ybGlnIHBzeWtpc2sgbGlkZWxzZSBvZy9lbGxlciBhbHZvcmxpZyBydXNsaWRlbHNlLg=="
   },
   {
     "id": "000042",
@@ -2195,7 +2277,9 @@
         "lov": "Helse - og omsorgstjenesteloven  første ledd nr. 6 bokstav c). Forskrift om egenandel for kommunale helse - og omsorgstjenester.",
         "paragraf": "§ 3-2"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Et tidsbegrenset opphold i korttidsavdeling kan være aktuelt for å styrke eller opprettholde funksjon og helse. Målet med oppholdet er å gjøre det mulig for deg å bo trygt og forsvarlig i eget hjem.",
+    "beskrivelse_rich_base64": "RXQgdGlkc2JlZ3JlbnNldCBvcHBob2xkIGkga29ydHRpZHNhdmRlbGluZyBrYW4gdsOmcmUgYWt0dWVsdCBmb3Igw6Ugc3R5cmtlIGVsbGVyIG9wcHJldHRob2xkZSBmdW5rc2pvbiBvZyBoZWxzZS4gTcOlbGV0IG1lZCBvcHBob2xkZXQgZXIgw6UgZ2rDuHJlIGRldCBtdWxpZyBmb3IgZGVnIMOlIGJvIHRyeWd0IG9nIGZvcnN2YXJsaWcgaSBlZ2V0IGhqZW0u"
   },
   {
     "id": "000043",
@@ -2242,7 +2326,9 @@
         "Ved innvilgelse av en døgnbemannet omsorgsbolig må du også inngå en husleiekontrakt jf. Husleieloven. Mer informasjon: Husleieloven",
         "Venteliste"
       ]
-    }
+    },
+    "beskrivelse_plain_text": "En HDO-bolig er en tilpasset bolig for personer som mottar hjemmebaserte tjenester.",
+    "beskrivelse_rich_base64": "RW4gSERPLWJvbGlnIGVyIGVuIHRpbHBhc3NldCBib2xpZyBmb3IgcGVyc29uZXIgc29tIG1vdHRhciBoamVtbWViYXNlcnRlIHRqZW5lc3Rlci4="
   },
   {
     "id": "000044",
@@ -2307,6 +2393,8 @@
         "lov": "Helse- og omsorgstjenesteloven  annet ledd. Pasient- og brukerrettighetsloven§ 2-1e. Forskrift om rett til langtidsopphold i sykehjem Alta kommune.",
         "paragraf": "§ 3-2a"
       }
-    ]
+    ],
+    "beskrivelse_plain_text": "Sykehjem er en institusjon etter helse- og omsorgstjenesteloven, og er et tilbud for personer med behov for omfattende og døgnkontinuerlige helse- og omsorgstjenester.",
+    "beskrivelse_rich_base64": "U3lrZWhqZW0gZXIgZW4gaW5zdGl0dXNqb24gZXR0ZXIgaGVsc2UtIG9nIG9tc29yZ3N0amVuZXN0ZWxvdmVuLCBvZyBlciBldCB0aWxidWQgZm9yIHBlcnNvbmVyIG1lZCBiZWhvdiBmb3Igb21mYXR0ZW5kZSBvZyBkw7hnbmtvbnRpbnVlcmxpZ2UgaGVsc2UtIG9nIG9tc29yZ3N0amVuZXN0ZXIu"
   }
 ]

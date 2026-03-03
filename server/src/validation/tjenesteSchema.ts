@@ -54,6 +54,7 @@ const KontaktpunktSchema = z.object({
   type: KontaktpunktTypeSchema,
   beskrivelse: z.string(),
   verdi: z.string(),
+  åpningstid: z.string().optional(),
 });
 
 const EksternLenkeSchema = z.object({
@@ -95,6 +96,8 @@ export const TjenesteSchema = z.object({
   geografi: GeografiSchema.optional(),
   for_du_søker: z.array(z.string()).optional(),
   beskrivelse: z.string(),
+  beskrivelse_plain_text: z.string().optional(),
+  beskrivelse_rich_base64: z.string().optional(),
   tildelingskriterier: z.array(z.string()).optional(),
   særlige_varianter: z.array(SærligVariantSchema).optional(),
   vedtak: VedtakInfoSchema.optional(),

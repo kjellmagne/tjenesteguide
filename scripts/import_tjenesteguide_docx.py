@@ -9,6 +9,8 @@ service instead of becoming standalone records.
 
 from __future__ import annotations
 
+import base64
+import html
 import json
 import re
 from dataclasses import dataclass
@@ -401,6 +403,11 @@ def dedupe_strings(values: Iterable[str]) -> list[str]:
     return deduped
 
 
+def plain_text_to_rich_base64(value: str) -> str:
+    rich_html = html.escape(value).replace("\n", "<br>")
+    return base64.b64encode(rich_html.encode("utf-8")).decode("ascii")
+
+
 def collect_heading4_variants(
     sections: list[HeadingSection], index: int
 ) -> list[dict[str, list[str] | str]]:
@@ -500,6 +507,8 @@ def build_service_item(
         "trinn_nivå": trinn_niva,
         "målgruppe": malgruppe,
         "beskrivelse": beskrivelse,
+        "beskrivelse_plain_text": beskrivelse,
+        "beskrivelse_rich_base64": plain_text_to_rich_base64(beskrivelse),
         "status": "aktiv",
         "interne_notater": [all_text],
     }

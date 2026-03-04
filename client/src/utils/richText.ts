@@ -82,3 +82,38 @@ export function resolveRichHtml(input: {
   }
   return plainTextToRichHtml(input.beskrivelse_plain_text || input.beskrivelse || "");
 }
+
+export function normalizeRichTextFromLegacyArray(input: {
+  plain_text?: string;
+  rich_base64?: string;
+  legacy_array?: string[];
+}): {
+  plain_text: string;
+  rich_base64: string;
+  legacy_array?: string[];
+} {
+  const decodedRich = decodeBase64ToUtf8(input.rich_base64);
+  const plainFromRich = decodedRich ? stripRichTextToPlainText(decodedRich) : "";
+  const legacyText = (input.legacy_array || []).join("\n\n");
+  const plain = input.plain_text || legacyText || plainFromRich || "";
+  const richHtml = decodedRich || plainTextToRichHtml(plain);
+
+  return {
+    plain_text: plain,
+    rich_base64: encodeUtf8ToBase64(richHtml),
+    legacy_array: plain.trim() ? [plain] : undefined,
+  };
+}
+
+export function resolveRichHtmlFromLegacyArray(input: {
+  plain_text?: string;
+  rich_base64?: string;
+  legacy_array?: string[];
+}): string {
+  const decodedRich = decodeBase64ToUtf8(input.rich_base64);
+  if (decodedRich) {
+    return decodedRich;
+  }
+  const plain = input.plain_text || (input.legacy_array || []).join("\n\n") || "";
+  return plainTextToRichHtml(plain);
+}

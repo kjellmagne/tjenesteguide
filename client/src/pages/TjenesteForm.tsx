@@ -19,7 +19,9 @@ import Modal from "../components/Modal";
 import RichTextEditor from "../components/RichTextEditor";
 import {
   normalizeBeskrivelseRepresentations,
+  normalizeRichTextFromLegacyArray,
   resolveRichHtml,
+  resolveRichHtmlFromLegacyArray,
   stripRichTextToPlainText,
   encodeUtf8ToBase64,
 } from "../utils/richText";
@@ -37,6 +39,16 @@ const INITIAL_FORM_DATA: Tjeneste = {
   beskrivelse: "",
   beskrivelse_plain_text: "",
   beskrivelse_rich_base64: "",
+  for_du_søker_plain_text: "",
+  for_du_søker_rich_base64: "",
+  tildelingskriterier_plain_text: "",
+  tildelingskriterier_rich_base64: "",
+  dette_inngår_ikke_i_tjenestetilbudet_plain_text: "",
+  dette_inngår_ikke_i_tjenestetilbudet_rich_base64: "",
+  hva_kan_du_forvente_plain_text: "",
+  hva_kan_du_forvente_rich_base64: "",
+  forventninger_til_bruker_plain_text: "",
+  forventninger_til_bruker_rich_base64: "",
   status: "aktiv",
 };
 
@@ -59,6 +71,55 @@ const DEFAULT_MÅLGRUPPE_KATEGORIER = [
   "Sosiale utfordringer",
   "Pårørende",
 ];
+
+function normalizeLegacyRichTextFields(data: Tjeneste) {
+  const forDuSoker = normalizeRichTextFromLegacyArray({
+    plain_text: data.for_du_søker_plain_text,
+    rich_base64: data.for_du_søker_rich_base64,
+    legacy_array: data.for_du_søker,
+  });
+  const tildelingskriterier = normalizeRichTextFromLegacyArray({
+    plain_text: data.tildelingskriterier_plain_text,
+    rich_base64: data.tildelingskriterier_rich_base64,
+    legacy_array: data.tildelingskriterier,
+  });
+  const detteInngårIkkeITjenestetilbudet = normalizeRichTextFromLegacyArray({
+    plain_text: data.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
+    rich_base64: data.dette_inngår_ikke_i_tjenestetilbudet_rich_base64,
+    legacy_array: data.dette_inngår_ikke_i_tjenestetilbudet,
+  });
+  const hvaKanDuForvente = normalizeRichTextFromLegacyArray({
+    plain_text: data.hva_kan_du_forvente_plain_text,
+    rich_base64: data.hva_kan_du_forvente_rich_base64,
+    legacy_array: data.hva_kan_du_forvente,
+  });
+  const forventningerTilBruker = normalizeRichTextFromLegacyArray({
+    plain_text: data.forventninger_til_bruker_plain_text,
+    rich_base64: data.forventninger_til_bruker_rich_base64,
+    legacy_array: data.forventninger_til_bruker,
+  });
+
+  return {
+    for_du_søker: forDuSoker.legacy_array,
+    for_du_søker_plain_text: forDuSoker.plain_text,
+    for_du_søker_rich_base64: forDuSoker.rich_base64,
+    tildelingskriterier: tildelingskriterier.legacy_array,
+    tildelingskriterier_plain_text: tildelingskriterier.plain_text,
+    tildelingskriterier_rich_base64: tildelingskriterier.rich_base64,
+    dette_inngår_ikke_i_tjenestetilbudet:
+      detteInngårIkkeITjenestetilbudet.legacy_array,
+    dette_inngår_ikke_i_tjenestetilbudet_plain_text:
+      detteInngårIkkeITjenestetilbudet.plain_text,
+    dette_inngår_ikke_i_tjenestetilbudet_rich_base64:
+      detteInngårIkkeITjenestetilbudet.rich_base64,
+    hva_kan_du_forvente: hvaKanDuForvente.legacy_array,
+    hva_kan_du_forvente_plain_text: hvaKanDuForvente.plain_text,
+    hva_kan_du_forvente_rich_base64: hvaKanDuForvente.rich_base64,
+    forventninger_til_bruker: forventningerTilBruker.legacy_array,
+    forventninger_til_bruker_plain_text: forventningerTilBruker.plain_text,
+    forventninger_til_bruker_rich_base64: forventningerTilBruker.rich_base64,
+  };
+}
 
 export default function TjenesteForm() {
   const { id } = useParams<{ id: string }>();
@@ -102,6 +163,71 @@ export default function TjenesteForm() {
       formData.beskrivelse_rich_base64,
     ]
   );
+  const forDuSokerRichHtml = useMemo(
+    () =>
+      resolveRichHtmlFromLegacyArray({
+        plain_text: formData.for_du_søker_plain_text,
+        rich_base64: formData.for_du_søker_rich_base64,
+        legacy_array: formData.for_du_søker,
+      }),
+    [
+      formData.for_du_søker_plain_text,
+      formData.for_du_søker_rich_base64,
+      formData.for_du_søker,
+    ]
+  );
+  const tildelingskriterierRichHtml = useMemo(
+    () =>
+      resolveRichHtmlFromLegacyArray({
+        plain_text: formData.tildelingskriterier_plain_text,
+        rich_base64: formData.tildelingskriterier_rich_base64,
+        legacy_array: formData.tildelingskriterier,
+      }),
+    [
+      formData.tildelingskriterier_plain_text,
+      formData.tildelingskriterier_rich_base64,
+      formData.tildelingskriterier,
+    ]
+  );
+  const detteInngårIkkeITjenestetilbudetRichHtml = useMemo(
+    () =>
+      resolveRichHtmlFromLegacyArray({
+        plain_text: formData.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
+        rich_base64: formData.dette_inngår_ikke_i_tjenestetilbudet_rich_base64,
+        legacy_array: formData.dette_inngår_ikke_i_tjenestetilbudet,
+      }),
+    [
+      formData.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
+      formData.dette_inngår_ikke_i_tjenestetilbudet_rich_base64,
+      formData.dette_inngår_ikke_i_tjenestetilbudet,
+    ]
+  );
+  const hvaKanDuForventeRichHtml = useMemo(
+    () =>
+      resolveRichHtmlFromLegacyArray({
+        plain_text: formData.hva_kan_du_forvente_plain_text,
+        rich_base64: formData.hva_kan_du_forvente_rich_base64,
+        legacy_array: formData.hva_kan_du_forvente,
+      }),
+    [
+      formData.hva_kan_du_forvente_plain_text,
+      formData.hva_kan_du_forvente_rich_base64,
+      formData.hva_kan_du_forvente,
+    ]
+  );
+  const forventningerTilBrukerRichHtml = useMemo(
+    () =>
+      resolveRichHtmlFromLegacyArray({
+        plain_text: formData.forventninger_til_bruker_plain_text,
+        rich_base64: formData.forventninger_til_bruker_rich_base64,
+        legacy_array: formData.forventninger_til_bruker,
+      }),
+    [
+      formData.forventninger_til_bruker_plain_text,
+      formData.forventninger_til_bruker_rich_base64,
+      formData.forventninger_til_bruker,
+    ]
+  );
 
   async function loadTjeneste() {
     if (!id) return;
@@ -110,9 +236,11 @@ export default function TjenesteForm() {
       setError(null);
       const data = await fetchTjenesteById(id);
       const normalizedBeskrivelse = normalizeBeskrivelseRepresentations(data);
+      const normalizedLegacyRichText = normalizeLegacyRichTextFields(data);
       const normalized: Tjeneste = {
         ...data,
         ...normalizedBeskrivelse,
+        ...normalizedLegacyRichText,
         trinn_nivå: data.trinn_nivå || (data.vedtaksbasert ? "trinn1" : "grunnmur"),
       };
       setFormData(normalized);
@@ -250,6 +378,81 @@ export default function TjenesteForm() {
     }));
   }
 
+  function updateLegacyRichTextFieldFromHtml(
+    field:
+      | "for_du_søker"
+      | "tildelingskriterier"
+      | "dette_inngår_ikke_i_tjenestetilbudet"
+      | "hva_kan_du_forvente"
+      | "forventninger_til_bruker",
+    plainField:
+      | "for_du_søker_plain_text"
+      | "tildelingskriterier_plain_text"
+      | "dette_inngår_ikke_i_tjenestetilbudet_plain_text"
+      | "hva_kan_du_forvente_plain_text"
+      | "forventninger_til_bruker_plain_text",
+    richField:
+      | "for_du_søker_rich_base64"
+      | "tildelingskriterier_rich_base64"
+      | "dette_inngår_ikke_i_tjenestetilbudet_rich_base64"
+      | "hva_kan_du_forvente_rich_base64"
+      | "forventninger_til_bruker_rich_base64",
+    richHtml: string
+  ) {
+    const plainText = stripRichTextToPlainText(richHtml);
+    setFormData((prev) => ({
+      ...prev,
+      [field]: plainText.trim() ? [plainText] : undefined,
+      [plainField]: plainText,
+      [richField]: encodeUtf8ToBase64(richHtml),
+    }));
+  }
+
+  function updateForDuSokerFromRichHtml(richHtml: string) {
+    updateLegacyRichTextFieldFromHtml(
+      "for_du_søker",
+      "for_du_søker_plain_text",
+      "for_du_søker_rich_base64",
+      richHtml
+    );
+  }
+
+  function updateTildelingskriterierFromRichHtml(richHtml: string) {
+    updateLegacyRichTextFieldFromHtml(
+      "tildelingskriterier",
+      "tildelingskriterier_plain_text",
+      "tildelingskriterier_rich_base64",
+      richHtml
+    );
+  }
+
+  function updateHvaKanDuForventeFromRichHtml(richHtml: string) {
+    updateLegacyRichTextFieldFromHtml(
+      "hva_kan_du_forvente",
+      "hva_kan_du_forvente_plain_text",
+      "hva_kan_du_forvente_rich_base64",
+      richHtml
+    );
+  }
+
+  function updateDetteInngårIkkeITjenestetilbudetFromRichHtml(richHtml: string) {
+    updateLegacyRichTextFieldFromHtml(
+      "dette_inngår_ikke_i_tjenestetilbudet",
+      "dette_inngår_ikke_i_tjenestetilbudet_plain_text",
+      "dette_inngår_ikke_i_tjenestetilbudet_rich_base64",
+      richHtml
+    );
+  }
+
+  function updateForventningerTilBrukerFromRichHtml(richHtml: string) {
+    updateLegacyRichTextFieldFromHtml(
+      "forventninger_til_bruker",
+      "forventninger_til_bruker_plain_text",
+      "forventninger_til_bruker_rich_base64",
+      richHtml
+    );
+  }
+
   function addArrayItem(field: keyof Tjeneste, item: any) {
     setFormData((prev) => ({
       ...prev,
@@ -361,6 +564,7 @@ export default function TjenesteForm() {
 
     try {
       const normalizedBeskrivelse = normalizeBeskrivelseRepresentations(formData);
+      const normalizedLegacyRichText = normalizeLegacyRichTextFields(formData);
       if (!normalizedBeskrivelse.beskrivelse.trim()) {
         setError("Beskrivelse er påkrevd.");
         return;
@@ -375,6 +579,7 @@ export default function TjenesteForm() {
       const payload: Tjeneste = {
         ...formData,
         ...normalizedBeskrivelse,
+        ...normalizedLegacyRichText,
         trinn_nivå: normalizedTrinn,
         vedtaksbasert: normalizedTrinn !== "grunnmur",
         lavterskel: normalizedTrinn === "grunnmur",
@@ -788,6 +993,7 @@ export default function TjenesteForm() {
               <option value="frivillig">Frivillig</option>
               <option value="statlig">Statlig</option>
               <option value="privat">Privat</option>
+              <option value="samarbeid">Samarbeid</option>
             </select>
           </FormField>
 
@@ -945,30 +1151,37 @@ export default function TjenesteForm() {
             </p>
           </FormField>
 
-          <FormField label="For du søker">
-            <textarea
-              value={(formData.for_du_søker || []).join("\n\n")}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateField("for_du_søker", value.trim() ? [value] : undefined);
-              }}
-              rows={6}
-              placeholder="Skriv informasjon før søker..."
-              className="input-field"
+          <FormField label="Før du søker">
+            <RichTextEditor
+              value={forDuSokerRichHtml}
+              onChange={updateForDuSokerFromRichHtml}
+              placeholder="Skriv informasjon før du søker..."
             />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
           </FormField>
 
           <FormField label="Tildelingskriterier">
-            <textarea
-              value={(formData.tildelingskriterier || []).join("\n\n")}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateField("tildelingskriterier", value.trim() ? [value] : undefined);
-              }}
-              rows={6}
+            <RichTextEditor
+              value={tildelingskriterierRichHtml}
+              onChange={updateTildelingskriterierFromRichHtml}
               placeholder="Skriv tildelingskriterier..."
-              className="input-field"
             />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
+          </FormField>
+
+          <FormField label="Dette inngår ikke i tjenestetilbudet">
+            <RichTextEditor
+              value={detteInngårIkkeITjenestetilbudetRichHtml}
+              onChange={updateDetteInngårIkkeITjenestetilbudetFromRichHtml}
+              placeholder="Skriv hva som ikke inngår i tjenestetilbudet..."
+            />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
           </FormField>
 
           <FormField label="Særlige varianter">
@@ -1102,29 +1315,25 @@ export default function TjenesteForm() {
         {/* Hva kan du forvente / forventninger */}
         <Section title="Hva kan du forvente / Forventninger">
           <FormField label="Hva kan du forvente">
-            <textarea
-              value={(formData.hva_kan_du_forvente || []).join("\n\n")}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateField("hva_kan_du_forvente", value.trim() ? [value] : undefined);
-              }}
-              rows={6}
+            <RichTextEditor
+              value={hvaKanDuForventeRichHtml}
+              onChange={updateHvaKanDuForventeFromRichHtml}
               placeholder="Skriv hva brukeren kan forvente..."
-              className="input-field"
             />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
           </FormField>
 
           <FormField label="Forventninger til bruker">
-            <textarea
-              value={(formData.forventninger_til_bruker || []).join("\n\n")}
-              onChange={(e) => {
-                const value = e.target.value;
-                updateField("forventninger_til_bruker", value.trim() ? [value] : undefined);
-              }}
-              rows={6}
+            <RichTextEditor
+              value={forventningerTilBrukerRichHtml}
+              onChange={updateForventningerTilBrukerFromRichHtml}
               placeholder="Skriv forventninger til bruker..."
-              className="input-field"
             />
+            <p className="text-xs text-[var(--color-text-subtle)] mt-2">
+              Lagrer både riktekst (Base64) og ren tekst for søk.
+            </p>
           </FormField>
         </Section>
 

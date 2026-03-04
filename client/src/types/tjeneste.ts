@@ -54,7 +54,12 @@ export interface EksternLenke {
   url: string;
 }
 
-export type LeverandørType = "kommunal" | "frivillig" | "statlig" | "privat";
+export type LeverandørType =
+  | "kommunal"
+  | "frivillig"
+  | "statlig"
+  | "privat"
+  | "samarbeid";
 
 export type TjenesteStatus = "aktiv" | "planlagt" | "utgår";
 export type TrinnNiva =
@@ -81,14 +86,25 @@ export interface Tjeneste {
   leverandør_organisasjoner?: string[];
   geografi?: Geografi;
   for_du_søker?: string[];
+  for_du_søker_plain_text?: string;
+  for_du_søker_rich_base64?: string;
   beskrivelse: string;
   beskrivelse_plain_text?: string;
   beskrivelse_rich_base64?: string;
   tildelingskriterier?: string[];
+  tildelingskriterier_plain_text?: string;
+  tildelingskriterier_rich_base64?: string;
+  dette_inngår_ikke_i_tjenestetilbudet?: string[];
+  dette_inngår_ikke_i_tjenestetilbudet_plain_text?: string;
+  dette_inngår_ikke_i_tjenestetilbudet_rich_base64?: string;
   særlige_varianter?: SærligVariant[];
   vedtak?: VedtakInfo;
   hva_kan_du_forvente?: string[];
+  hva_kan_du_forvente_plain_text?: string;
+  hva_kan_du_forvente_rich_base64?: string;
   forventninger_til_bruker?: string[];
+  forventninger_til_bruker_plain_text?: string;
+  forventninger_til_bruker_rich_base64?: string;
   evaluering?: Evaluering;
   pris?: PrisInfo;
   lovhjemmel?: Lovhjemmel[];

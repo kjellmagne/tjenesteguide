@@ -31,6 +31,11 @@ BLOCK_MARKERS: dict[str, list[str]] = {
     "soknad": ["søknad og saksbehandling", "søknad"],
     "malgruppe": ["målgruppe"],
     "tildelingskriterier": ["tildelingskriterier", "kriterier for tildeling"],
+    "dette_inngar_ikke_i_tjenestetilbudet": [
+        "dette inngår ikke i tjenestetilbudet",
+        "dette inngår ikke i bpa",
+        "dette inngår ikke",
+    ],
     "vedtak": ["vedtak om tjenesten"],
     "hva_kan_du_forvente": ["dette kan du forvente", "hva kan du forvente"],
     "forventninger_til_bruker": ["våre forventninger", "hva forventes av deg"],
@@ -43,6 +48,7 @@ BLOCK_MARKERS: dict[str, list[str]] = {
 SERVICE_MARKERS = {
     "for_du_soker",
     "tildelingskriterier",
+    "dette_inngar_ikke_i_tjenestetilbudet",
     "vedtak",
     "soknad",
     "lovhjemmel",
@@ -516,18 +522,38 @@ def build_service_item(
     for_du_soker = to_text_array(blocks.get("for_du_soker", []))
     if for_du_soker:
         item["for_du_søker"] = for_du_soker
+        item["for_du_søker_plain_text"] = for_du_soker[0]
+        item["for_du_søker_rich_base64"] = plain_text_to_rich_base64(for_du_soker[0])
 
     tildelingskriterier = to_text_array(blocks.get("tildelingskriterier", []))
     if tildelingskriterier:
         item["tildelingskriterier"] = tildelingskriterier
+        item["tildelingskriterier_plain_text"] = tildelingskriterier[0]
+        item["tildelingskriterier_rich_base64"] = plain_text_to_rich_base64(
+            tildelingskriterier[0]
+        )
+
+    dette_inngar_ikke = to_text_array(blocks.get("dette_inngar_ikke_i_tjenestetilbudet", []))
+    if dette_inngar_ikke:
+        item["dette_inngår_ikke_i_tjenestetilbudet"] = dette_inngar_ikke
+        item["dette_inngår_ikke_i_tjenestetilbudet_plain_text"] = dette_inngar_ikke[0]
+        item["dette_inngår_ikke_i_tjenestetilbudet_rich_base64"] = plain_text_to_rich_base64(
+            dette_inngar_ikke[0]
+        )
 
     kan_forvente = to_text_array(blocks.get("hva_kan_du_forvente", []))
     if kan_forvente:
         item["hva_kan_du_forvente"] = kan_forvente
+        item["hva_kan_du_forvente_plain_text"] = kan_forvente[0]
+        item["hva_kan_du_forvente_rich_base64"] = plain_text_to_rich_base64(kan_forvente[0])
 
     forventninger = to_text_array(blocks.get("forventninger_til_bruker", []))
     if forventninger:
         item["forventninger_til_bruker"] = forventninger
+        item["forventninger_til_bruker_plain_text"] = forventninger[0]
+        item["forventninger_til_bruker_rich_base64"] = plain_text_to_rich_base64(
+            forventninger[0]
+        )
 
     evaluering = to_text_array(blocks.get("evaluering", []))
     if evaluering:

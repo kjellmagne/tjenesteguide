@@ -18,6 +18,27 @@ type BeskrivelseRepresentations = {
   beskrivelse_rich_base64?: string;
 };
 
+type TextArrayFieldConfig = {
+  legacyField:
+    | "for_du_søker"
+    | "tildelingskriterier"
+    | "dette_inngår_ikke_i_tjenestetilbudet"
+    | "hva_kan_du_forvente"
+    | "forventninger_til_bruker";
+  plainField:
+    | "for_du_søker_plain_text"
+    | "tildelingskriterier_plain_text"
+    | "dette_inngår_ikke_i_tjenestetilbudet_plain_text"
+    | "hva_kan_du_forvente_plain_text"
+    | "forventninger_til_bruker_plain_text";
+  richField:
+    | "for_du_søker_rich_base64"
+    | "tildelingskriterier_rich_base64"
+    | "dette_inngår_ikke_i_tjenestetilbudet_rich_base64"
+    | "hva_kan_du_forvente_rich_base64"
+    | "forventninger_til_bruker_rich_base64";
+};
+
 function encodeUtf8ToBase64(value: string): string {
   return Buffer.from(value, "utf-8").toString("base64");
 }
@@ -65,6 +86,62 @@ function normalizeBeskrivelseFields<T extends BeskrivelseRepresentations>(value:
   };
 }
 
+function normalizeTextArrayField<T extends Record<string, any>>(
+  value: T,
+  config: TextArrayFieldConfig
+): T {
+  const legacyText = Array.isArray(value[config.legacyField])
+    ? value[config.legacyField].filter(Boolean).join("\n\n")
+    : "";
+  const decodedRich = value[config.richField]
+    ? decodeBase64ToUtf8(value[config.richField])
+    : "";
+  const plainFromRich = decodedRich ? stripHtmlToPlainText(decodedRich) : "";
+  const normalizedPlain =
+    value[config.plainField] || legacyText || plainFromRich || "";
+  const normalizedRich =
+    value[config.richField] || encodeUtf8ToBase64(normalizedPlain);
+
+  return {
+    ...value,
+    [config.legacyField]: normalizedPlain.trim() ? [normalizedPlain] : undefined,
+    [config.plainField]: normalizedPlain,
+    [config.richField]: normalizedRich,
+  };
+}
+
+function normalizeRichTextFields<T extends BeskrivelseRepresentations & Record<string, any>>(
+  value: T
+): T {
+  let normalized = normalizeBeskrivelseFields(value);
+  normalized = normalizeTextArrayField(normalized, {
+    legacyField: "for_du_søker",
+    plainField: "for_du_søker_plain_text",
+    richField: "for_du_søker_rich_base64",
+  });
+  normalized = normalizeTextArrayField(normalized, {
+    legacyField: "tildelingskriterier",
+    plainField: "tildelingskriterier_plain_text",
+    richField: "tildelingskriterier_rich_base64",
+  });
+  normalized = normalizeTextArrayField(normalized, {
+    legacyField: "dette_inngår_ikke_i_tjenestetilbudet",
+    plainField: "dette_inngår_ikke_i_tjenestetilbudet_plain_text",
+    richField: "dette_inngår_ikke_i_tjenestetilbudet_rich_base64",
+  });
+  normalized = normalizeTextArrayField(normalized, {
+    legacyField: "hva_kan_du_forvente",
+    plainField: "hva_kan_du_forvente_plain_text",
+    richField: "hva_kan_du_forvente_rich_base64",
+  });
+  normalized = normalizeTextArrayField(normalized, {
+    legacyField: "forventninger_til_bruker",
+    plainField: "forventninger_til_bruker_plain_text",
+    richField: "forventninger_til_bruker_rich_base64",
+  });
+  return normalized;
+}
+
 /**
  * Search and filter tjenester in-memory.
  */
@@ -92,6 +169,13 @@ function filterTjenester(
           ...(målgruppe.kategorier || []),
         ]),
         t.beskrivelse_plain_text || t.beskrivelse,
+        t.for_du_søker_plain_text || (t.for_du_søker || []).join("\n"),
+        t.tildelingskriterier_plain_text || (t.tildelingskriterier || []).join("\n"),
+        t.dette_inngår_ikke_i_tjenestetilbudet_plain_text ||
+          (t.dette_inngår_ikke_i_tjenestetilbudet || []).join("\n"),
+        t.hva_kan_du_forvente_plain_text || (t.hva_kan_du_forvente || []).join("\n"),
+        t.forventninger_til_bruker_plain_text ||
+          (t.forventninger_til_bruker || []).join("\n"),
       ]
         .filter(Boolean)
         .join(" ")
@@ -131,7 +215,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const { q, status, tema, tjenestetype, trinn_niva } = req.query;
     let tjenester = (await getAllTjenester()).map((tjeneste) =>
-      normalizeBeskrivelseFields(tjeneste)
+      normalizeRichTextFields(tjeneste)
     );
 
     tjenester = filterTjenester(
@@ -163,7 +247,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       return res.status(404).json({ error: "Not found" });
     }
 
-    res.json(normalizeBeskrivelseFields(tjeneste));
+    res.json(normalizeRichTextFields(tjeneste));
   } catch (error) {
     console.error("Error fetching tjeneste:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -185,7 +269,7 @@ router.post("/", async (req: Request, res: Response) => {
       });
     }
 
-    const normalized = normalizeBeskrivelseFields(validationResult.data);
+    const normalized = normalizeRichTextFields(validationResult.data);
     const created = await createTjenesteWithAutoId(normalized);
     res.status(201).json(created);
   } catch (error: any) {
@@ -215,7 +299,7 @@ router.put("/:id", async (req: Request, res: Response) => {
     
     // Ensure ID matches URL parameter
     tjeneste.id = id;
-    const normalized = normalizeBeskrivelseFields(tjeneste);
+    const normalized = normalizeRichTextFields(tjeneste);
     const updated = await updateTjeneste(id, normalized);
     res.json(updated);
   } catch (error: any) {
@@ -252,7 +336,7 @@ router.patch("/:id", async (req: Request, res: Response) => {
       });
     }
 
-    const normalized = normalizeBeskrivelseFields(validationResult.data);
+    const normalized = normalizeRichTextFields(validationResult.data);
     const updated = await updateTjeneste(id, normalized);
     res.json(updated);
   } catch (error: any) {

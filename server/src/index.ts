@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import tjenesterRouter from "./routes/tjenester";
+import chatRouter from "./routes/chat";
 import { ensureDataFile } from "./repository/tjenesterRepo";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // API routes
 app.use("/api/tjenester", tjenesterRouter);
+app.use("/api/chat", chatRouter);
 
 // In production, serve static files from client/dist
 if (process.env.NODE_ENV === "production") {

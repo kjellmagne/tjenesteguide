@@ -31,12 +31,14 @@ export default function Layout({ children }: LayoutProps) {
                 </span>
               </span>
             </Link>
-            <Link
-              to="/tjenester/ny"
-              className="btn-primary"
-            >
-              Ny tjeneste
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/ai-chat" className="btn-secondary">
+                AI-chat
+              </Link>
+              <Link to="/tjenester/ny" className="btn-primary">
+                Ny tjeneste
+              </Link>
+            </div>
           </div>
         </div>
       </header>

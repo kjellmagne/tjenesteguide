@@ -49,6 +49,37 @@ Admin web app for managing municipal services ("tjenester") stored in a JSON fil
    - Server: http://localhost:3001
    - Client: http://localhost:5173
 
+### AI Chat Environment Variables
+
+The AI chat page uses:
+- Local guardrail model first (default: Ollama)
+- Gemini for final answer, but only with included JSON context
+
+Set these variables before running server:
+
+```bash
+export GEMINI_API_KEY="your_google_ai_studio_key"
+export GEMINI_MODEL="gemini-2.5-pro"            # optional (default set)
+
+# Privacy LLM (OpenAI-compatible endpoint)
+export PRIVACY_LLM_PROVIDER="openai"            # optional (default set)
+export PRIVACY_MODEL="google/gemma-3-27b-it"    # optional (default set)
+export PRIVACY_ENDPOINT="http://10.200.16.103:8000/v1"  # optional (default set)
+export PRIVACY_API_KEY=""                       # optional
+export PRIVACY_REQUIRED="true"                  # optional, default true
+export PRIVACY_TIMEOUT_MS="7000"                # optional
+```
+
+Ollama alternative (if you want local Ollama instead):
+
+```bash
+export PRIVACY_LLM_PROVIDER="ollama"
+export PRIVACY_MODEL="llama3.2:3b"
+export PRIVACY_ENDPOINT="http://127.0.0.1:11434/api/chat"
+ollama pull llama3.2:3b
+ollama serve
+```
+
 3. **Build for production**:
    ```bash
    npm run build
@@ -92,6 +123,15 @@ All endpoints are prefixed with `/api/tjenester`:
 - `PATCH /api/tjenester/:id` - Partially update a service
 - `DELETE /api/tjenester/:id` - Delete a service
 
+AI chat endpoint:
+
+- `POST /api/chat/ask` - Ask question based only on `tjenester.json`
+  - Request body: `{ "message": "..." }`
+  - Flow:
+    1. Local guardrail checks for sensitive user data
+    2. If safe, selected JSON context is sent to Gemini
+    3. Model is instructed to answer only from included data
+
 ## Data Model
 
 The `Tjeneste` interface uses Norwegian field names and matches the JSON structure exactly. See `server/src/models/tjeneste.ts` for the complete type definition.
@@ -116,6 +156,7 @@ python3 scripts/import_tjenesteguide_docx.py
 - ✅ Validation on both client and server
 - ✅ Automatic 6-digit ID generation
 - ✅ File-based persistence (JSON)
+- ✅ AI chat with local privacy guardrail + Gemini answers from JSON only
 
 ## Notes
 

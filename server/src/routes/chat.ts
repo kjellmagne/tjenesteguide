@@ -66,6 +66,46 @@ type GeminiGenerateContentResponse = {
   };
 };
 
+type LlmDebugEntry = {
+  step: "privacy" | "gemini";
+  provider: string;
+  model: string;
+  url: string;
+  requestBody: unknown;
+  responseStatus?: number;
+  responseBody?: unknown;
+  startedAt: string;
+  durationMs: number;
+  error?: string;
+};
+
+type DebugCollector = {
+  enabled: boolean;
+  traces: LlmDebugEntry[];
+  add: (entry: LlmDebugEntry) => void;
+};
+
+function createDebugCollector(enabled: boolean): DebugCollector {
+  const traces: LlmDebugEntry[] = [];
+  return {
+    enabled,
+    traces,
+    add: (entry) => {
+      if (enabled) {
+        traces.push(entry);
+      }
+    },
+  };
+}
+
+function tryParseJson(value: string): unknown {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value;
+  }
+}
+
 function resolveTextField(plainText?: string, legacyArray?: string[]): string {
   const value = plainText || (legacyArray || []).join("\n\n");
   return value.trim();
@@ -297,45 +337,55 @@ function parseGuardrailJson(value: string): GuardrailDecision | null {
   return null;
 }
 
-async function runLocalGuardrail(question: string): Promise<GuardrailDecision> {
+async function runLocalGuardrail(
+  question: string,
+  debug?: DebugCollector
+): Promise<GuardrailDecision> {
   const controller = new AbortController();
   const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
     controller.abort();
   }, PRIVACY_TIMEOUT_MS);
+  const startedMs = Date.now();
+  const startedAtIso = new Date(startedMs).toISOString();
+  const requestBody = {
+    model: PRIVACY_MODEL,
+    stream: false,
+    messages: [
+      {
+        role: "system",
+        content:
+          "Du er en personvernvakt. Vurder om teksten inneholder sensitiv personinformasjon som ikke skal sendes til offentlig LLM. " +
+          "Sensitivt inkluderer blant annet personnummer/fødselsnummer, telefonnummer, e-post, bankkonto, kortnummer, " +
+          "detaljerte helseopplysninger og annen identifiserbar personinfo. Svar KUN med gyldig JSON på én linje: " +
+          '{"allow":true,"reason":""} eller {"allow":false,"reason":"kort begrunnelse på norsk"}.',
+      },
+      {
+        role: "user",
+        content: question,
+      },
+    ],
+    options: {
+      temperature: 0,
+    },
+  };
+  let responseStatus: number | undefined;
+  let responseRaw = "";
 
   try {
     const response = await fetch(PRIVACY_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: controller.signal,
-      body: JSON.stringify({
-        model: PRIVACY_MODEL,
-        stream: false,
-        messages: [
-          {
-            role: "system",
-            content:
-              "Du er en personvernvakt. Vurder om teksten inneholder sensitiv personinformasjon som ikke skal sendes til offentlig LLM. " +
-              "Sensitivt inkluderer blant annet personnummer/fødselsnummer, telefonnummer, e-post, bankkonto, kortnummer, " +
-              "detaljerte helseopplysninger og annen identifiserbar personinfo. Svar KUN med gyldig JSON på én linje: " +
-              '{"allow":true,"reason":""} eller {"allow":false,"reason":"kort begrunnelse på norsk"}.',
-          },
-          {
-            role: "user",
-            content: question,
-          },
-        ],
-        options: {
-          temperature: 0,
-        },
-      }),
+      body: JSON.stringify(requestBody),
     });
+    responseStatus = response.status;
+    responseRaw = await response.text();
 
     if (!response.ok) {
       throw new Error(`Local guardrail failed with ${response.status}`);
     }
 
-    const data = (await response.json()) as {
+    const data = tryParseJson(responseRaw) as {
       message?: { content?: string };
       response?: string;
     };
@@ -346,7 +396,33 @@ async function runLocalGuardrail(question: string): Promise<GuardrailDecision> {
       throw new Error("Could not parse local guardrail response");
     }
 
+    debug?.add({
+      step: "privacy",
+      provider: "ollama",
+      model: PRIVACY_MODEL,
+      url: PRIVACY_ENDPOINT,
+      requestBody,
+      responseStatus,
+      responseBody: tryParseJson(responseRaw),
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+    });
+
     return parsed;
+  } catch (error) {
+    debug?.add({
+      step: "privacy",
+      provider: "ollama",
+      model: PRIVACY_MODEL,
+      url: PRIVACY_ENDPOINT,
+      requestBody,
+      responseStatus,
+      responseBody: responseRaw ? tryParseJson(responseRaw) : undefined,
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
   } finally {
     clearTimeout(timeout);
   }
@@ -383,14 +459,40 @@ function extractOpenAIMessageContent(content: unknown): string {
   return "";
 }
 
-async function runOpenAIGuardrail(question: string): Promise<GuardrailDecision> {
+async function runOpenAIGuardrail(
+  question: string,
+  debug?: DebugCollector
+): Promise<GuardrailDecision> {
   const controller = new AbortController();
   const timeout: ReturnType<typeof setTimeout> = setTimeout(() => {
     controller.abort();
   }, PRIVACY_TIMEOUT_MS);
+  const startedMs = Date.now();
+  const startedAtIso = new Date(startedMs).toISOString();
+  const url = buildOpenAIChatCompletionsUrl(PRIVACY_ENDPOINT);
+  const requestBody = {
+    model: PRIVACY_MODEL,
+    messages: [
+      {
+        role: "system",
+        content:
+          "Du er en personvernvakt. Vurder om teksten inneholder sensitiv personinformasjon som ikke skal sendes til offentlig LLM. " +
+          "Sensitivt inkluderer blant annet personnummer/fødselsnummer, telefonnummer, e-post, bankkonto, kortnummer, " +
+          "detaljerte helseopplysninger og annen identifiserbar personinfo. Svar KUN med gyldig JSON på én linje: " +
+          '{"allow":true,"reason":""} eller {"allow":false,"reason":"kort begrunnelse på norsk"}.',
+      },
+      {
+        role: "user",
+        content: question,
+      },
+    ],
+    temperature: 0,
+    max_tokens: 120,
+  };
+  let responseStatus: number | undefined;
+  let responseRaw = "";
 
   try {
-    const url = buildOpenAIChatCompletionsUrl(PRIVACY_ENDPOINT);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -398,33 +500,18 @@ async function runOpenAIGuardrail(question: string): Promise<GuardrailDecision> 
         ...(PRIVACY_API_KEY ? { Authorization: `Bearer ${PRIVACY_API_KEY}` } : {}),
       },
       signal: controller.signal,
-      body: JSON.stringify({
-        model: PRIVACY_MODEL,
-        messages: [
-          {
-            role: "system",
-            content:
-              "Du er en personvernvakt. Vurder om teksten inneholder sensitiv personinformasjon som ikke skal sendes til offentlig LLM. " +
-              "Sensitivt inkluderer blant annet personnummer/fødselsnummer, telefonnummer, e-post, bankkonto, kortnummer, " +
-              "detaljerte helseopplysninger og annen identifiserbar personinfo. Svar KUN med gyldig JSON på én linje: " +
-              '{"allow":true,"reason":""} eller {"allow":false,"reason":"kort begrunnelse på norsk"}.',
-          },
-          {
-            role: "user",
-            content: question,
-          },
-        ],
-        temperature: 0,
-        max_tokens: 120,
-      }),
+      body: JSON.stringify(requestBody),
     });
+    responseStatus = response.status;
 
-    const raw = await response.text();
+    responseRaw = await response.text();
     if (!response.ok) {
-      throw new Error(`OpenAI guardrail failed with ${response.status}: ${raw.slice(0, 250)}`);
+      throw new Error(
+        `OpenAI guardrail failed with ${response.status}: ${responseRaw.slice(0, 250)}`
+      );
     }
 
-    const data = JSON.parse(raw) as {
+    const data = tryParseJson(responseRaw) as {
       choices?: Array<{ message?: { content?: unknown } }>;
     };
     const rawText = extractOpenAIMessageContent(data.choices?.[0]?.message?.content || "");
@@ -432,17 +519,47 @@ async function runOpenAIGuardrail(question: string): Promise<GuardrailDecision> 
     if (!parsed) {
       throw new Error("Could not parse OpenAI guardrail response");
     }
+
+    debug?.add({
+      step: "privacy",
+      provider: "openai-compatible",
+      model: PRIVACY_MODEL,
+      url,
+      requestBody,
+      responseStatus,
+      responseBody: tryParseJson(responseRaw),
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+    });
+
     return parsed;
+  } catch (error) {
+    debug?.add({
+      step: "privacy",
+      provider: "openai-compatible",
+      model: PRIVACY_MODEL,
+      url,
+      requestBody,
+      responseStatus,
+      responseBody: responseRaw ? tryParseJson(responseRaw) : undefined,
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
   } finally {
     clearTimeout(timeout);
   }
 }
 
-async function runPrivacyGuardrail(question: string): Promise<GuardrailDecision> {
+async function runPrivacyGuardrail(
+  question: string,
+  debug?: DebugCollector
+): Promise<GuardrailDecision> {
   if (PRIVACY_LLM_PROVIDER === "openai") {
-    return runOpenAIGuardrail(question);
+    return runOpenAIGuardrail(question, debug);
   }
-  return runLocalGuardrail(question);
+  return runLocalGuardrail(question, debug);
 }
 
 function detectSensitiveWithRegex(question: string): string | null {
@@ -471,11 +588,17 @@ function detectSensitiveWithRegex(question: string): string | null {
 async function askGemini(
   question: string,
   context: unknown,
-  geminiApiKey: string
+  geminiApiKey: string,
+  debug?: DebugCollector
 ): Promise<string> {
-  const url =
+  const requestUrl =
     `https://generativelanguage.googleapis.com/v1beta/models/` +
     `${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`;
+  const debugUrl =
+    `https://generativelanguage.googleapis.com/v1beta/models/` +
+    `${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=REDACTED`;
+  const startedMs = Date.now();
+  const startedAtIso = new Date(startedMs).toISOString();
 
   const generationConfig: {
     temperature: number;
@@ -494,84 +617,120 @@ async function askGemini(
     };
   }
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const requestBody = {
+    system_instruction: {
+      parts: [
+        {
+          text:
+            "Du er en assistent for Tjenesteguide. Du skal KUN svare basert på JSON-data som følger i brukerprompten. " +
+            "Ikke bruk ekstern kunnskap. Hvis svaret ikke finnes i dataene, svar nøyaktig: " +
+            '"Det finner jeg ikke i tjenestedataene." Svar på norsk bokmål. ' +
+            "Bruk først katalogen for å finne relevante tjenester, og bruk tjeneste_detaljer for selve svaret.",
+        },
+      ],
     },
-    body: JSON.stringify({
-      system_instruction: {
+    contents: [
+      {
+        role: "user",
         parts: [
           {
             text:
-              "Du er en assistent for Tjenesteguide. Du skal KUN svare basert på JSON-data som følger i brukerprompten. " +
-              "Ikke bruk ekstern kunnskap. Hvis svaret ikke finnes i dataene, svar nøyaktig: " +
-              '"Det finner jeg ikke i tjenestedataene." Svar på norsk bokmål. ' +
-              "Bruk først katalogen for å finne relevante tjenester, og bruk tjeneste_detaljer for selve svaret.",
+              `Spørsmål fra bruker:\n${question}\n\n` +
+              `Datagrunnlag (JSON):\n${JSON.stringify(context)}`,
           },
         ],
       },
-      contents: [
-        {
-          role: "user",
-          parts: [
-            {
-              text:
-                `Spørsmål fra bruker:\n${question}\n\n` +
-                `Datagrunnlag (JSON):\n${JSON.stringify(context)}`,
-            },
-          ],
-        },
-      ],
-      generationConfig,
-    }),
-  });
+    ],
+    generationConfig,
+  };
+  let responseStatus: number | undefined;
+  let raw = "";
 
-  const raw = await response.text();
-  if (!response.ok) {
-    let detail = raw.slice(0, 400);
-    try {
-      const parsed = JSON.parse(raw) as { error?: { message?: string } };
-      if (parsed.error?.message) {
-        detail = parsed.error.message;
+  try {
+    const response = await fetch(requestUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+    responseStatus = response.status;
+
+    raw = await response.text();
+    if (!response.ok) {
+      let detail = raw.slice(0, 400);
+      try {
+        const parsed = JSON.parse(raw) as { error?: { message?: string } };
+        if (parsed.error?.message) {
+          detail = parsed.error.message;
+        }
+      } catch {
+        // Keep raw excerpt when body is not JSON.
       }
-    } catch {
-      // Keep raw excerpt when body is not JSON.
+      throw new Error(`Gemini error (${response.status}): ${detail}`);
     }
-    throw new Error(`Gemini error (${response.status}): ${detail}`);
+
+    const parsed = JSON.parse(raw) as GeminiGenerateContentResponse;
+
+    const answer = (parsed.candidates || [])
+      .flatMap((candidate) => candidate.content?.parts || [])
+      .map((part) => part.text || "")
+      .join("\n")
+      .trim();
+
+    if (!answer) {
+      const finishReasons = (parsed.candidates || [])
+        .map((candidate) => candidate.finishReason)
+        .filter(Boolean)
+        .join(",");
+      const blockReason =
+        parsed.promptFeedback?.blockReasonMessage || parsed.promptFeedback?.blockReason || "";
+      const detailParts = [
+        finishReasons ? `finishReason=${finishReasons}` : "",
+        blockReason ? `blockReason=${blockReason}` : "",
+      ].filter(Boolean);
+      const detail = detailParts.length > 0 ? ` (${detailParts.join(" | ")})` : "";
+      throw new Error(
+        `Gemini returned an empty response${detail}. Raw excerpt: ${raw.slice(0, 320)}`
+      );
+    }
+
+    debug?.add({
+      step: "gemini",
+      provider: "gemini",
+      model: GEMINI_MODEL,
+      url: debugUrl,
+      requestBody,
+      responseStatus,
+      responseBody: tryParseJson(raw),
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+    });
+
+    return answer;
+  } catch (error) {
+    debug?.add({
+      step: "gemini",
+      provider: "gemini",
+      model: GEMINI_MODEL,
+      url: debugUrl,
+      requestBody,
+      responseStatus,
+      responseBody: raw ? tryParseJson(raw) : undefined,
+      startedAt: startedAtIso,
+      durationMs: Date.now() - startedMs,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
   }
-
-  const parsed = JSON.parse(raw) as GeminiGenerateContentResponse;
-
-  const answer = (parsed.candidates || [])
-    .flatMap((candidate) => candidate.content?.parts || [])
-    .map((part) => part.text || "")
-    .join("\n")
-    .trim();
-
-  if (!answer) {
-    const finishReasons = (parsed.candidates || [])
-      .map((candidate) => candidate.finishReason)
-      .filter(Boolean)
-      .join(",");
-    const blockReason =
-      parsed.promptFeedback?.blockReasonMessage || parsed.promptFeedback?.blockReason || "";
-    const detailParts = [
-      finishReasons ? `finishReason=${finishReasons}` : "",
-      blockReason ? `blockReason=${blockReason}` : "",
-    ].filter(Boolean);
-    const detail = detailParts.length > 0 ? ` (${detailParts.join(" | ")})` : "";
-    throw new Error(
-      `Gemini returned an empty response${detail}. Raw excerpt: ${raw.slice(0, 320)}`
-    );
-  }
-
-  return answer;
 }
 
 router.post("/ask", async (req: Request, res: Response) => {
+  let debug: DebugCollector | undefined;
   try {
     const message = typeof req.body?.message === "string" ? req.body.message.trim() : "";
+    const debugRequested = req.body?.debug === true;
+    debug = createDebugCollector(debugRequested);
     if (!message) {
       return res.status(400).json({ error: "message is required" });
     }
@@ -587,12 +746,13 @@ router.post("/ask", async (req: Request, res: Response) => {
         blocked: true,
         warning:
           "GEMINI_API_KEY mangler i servermiljøet. Legg den til og restart server/container.",
+        ...(debug.enabled ? { debug: { traces: debug.traces } } : {}),
       });
     }
 
     let guardrailDecision: GuardrailDecision;
     try {
-      guardrailDecision = await runPrivacyGuardrail(message);
+      guardrailDecision = await runPrivacyGuardrail(message, debug);
     } catch (error) {
       console.error("Privacy guardrail error:", error);
       if (PRIVACY_REQUIRED) {
@@ -601,6 +761,7 @@ router.post("/ask", async (req: Request, res: Response) => {
           warning:
             "Personvernkontroll er ikke tilgjengelig. Sjekk privacy-modell/endepunkt og prøv igjen.",
           details: `${error}`,
+          ...(debug.enabled ? { debug: { traces: debug.traces } } : {}),
         });
       }
 
@@ -611,6 +772,7 @@ router.post("/ask", async (req: Request, res: Response) => {
           warning:
             `Meldingen ser ut til å inneholde sensitiv informasjon (${regexReason}). ` +
             "Fjern dette og prøv igjen.",
+          ...(debug.enabled ? { debug: { traces: debug.traces } } : {}),
         });
       }
       guardrailDecision = { allow: true, reason: "Allowed by regex fallback" };
@@ -623,13 +785,14 @@ router.post("/ask", async (req: Request, res: Response) => {
           guardrailDecision.reason ||
           "Meldingen ser ut til å inneholde sensitiv personinformasjon. " +
             "Fjern persondata og prøv igjen.",
+        ...(debug.enabled ? { debug: { traces: debug.traces } } : {}),
       });
     }
 
     const allTjenester = await getAllTjenester();
     const detailedTjenester = pickRelevantTjenester(message, allTjenester);
     const context = buildGeminiContext(allTjenester, detailedTjenester, allTjenester.length);
-    const answer = await askGemini(message, context, geminiApiKey);
+    const answer = await askGemini(message, context, geminiApiKey, debug);
 
     return res.json({
       blocked: false,
@@ -639,6 +802,7 @@ router.post("/ask", async (req: Request, res: Response) => {
         inkludert_i_prompt: detailedTjenester.length,
         katalog_i_prompt: allTjenester.length,
       },
+      ...(debug.enabled ? { debug: { traces: debug.traces } } : {}),
     });
   } catch (error) {
     console.error("Chat error:", error);
@@ -646,6 +810,7 @@ router.post("/ask", async (req: Request, res: Response) => {
     return res.status(500).json({
       error: "Kunne ikke behandle chat-forespørselen",
       details,
+      ...(debug?.enabled ? { debug: { traces: debug.traces } } : {}),
     });
   }
 });

@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useRef, useState } from "react";
-import { askChatQuestion } from "../api/chat";
+import { askChatQuestion, LlmDebugEntry } from "../api/chat";
 
 type ChatRole = "assistant" | "user" | "warning";
 
@@ -10,7 +10,9 @@ type ChatMessage = {
   metadata?: {
     total_tjenester: number;
     inkludert_i_prompt: number;
+    katalog_i_prompt?: number;
   };
+  debugTraces?: LlmDebugEntry[];
 };
 
 const QUICK_PROMPTS = [
@@ -34,6 +36,7 @@ export default function AIChatPage() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [debugMode, setDebugMode] = useState(false);
 
   const canSend = input.trim().length > 0 && !loading;
 
@@ -42,9 +45,14 @@ export default function AIChatPage() {
     [messages]
   );
 
-  function appendMessage(role: ChatRole, text: string, metadata?: ChatMessage["metadata"]) {
+  function appendMessage(
+    role: ChatRole,
+    text: string,
+    metadata?: ChatMessage["metadata"],
+    debugTraces?: LlmDebugEntry[]
+  ) {
     const id = nextIdRef.current++;
-    setMessages((prev) => [...prev, { id, role, text, metadata }]);
+    setMessages((prev) => [...prev, { id, role, text, metadata, debugTraces }]);
   }
 
   async function sendQuestion(rawQuestion: string) {
@@ -59,7 +67,7 @@ export default function AIChatPage() {
     setLoading(true);
 
     try {
-      const response = await askChatQuestion(question);
+      const response = await askChatQuestion(question, { debug: debugMode });
 
       if (response.blocked) {
         const warningText = response.details
@@ -68,10 +76,17 @@ export default function AIChatPage() {
         appendMessage(
           "warning",
           warningText ||
-            "Meldingen din kan inneholde sensitiv informasjon. Fjern persondata og prøv igjen."
+            "Meldingen din kan inneholde sensitiv informasjon. Fjern persondata og prøv igjen.",
+          undefined,
+          response.debug?.traces
         );
       } else {
-        appendMessage("assistant", response.answer, response.metadata);
+        appendMessage(
+          "assistant",
+          response.answer,
+          response.metadata,
+          response.debug?.traces
+        );
       }
     } catch (err: any) {
       setError(err?.message || "Kunne ikke få svar fra chatten");
@@ -99,6 +114,22 @@ export default function AIChatPage() {
             Kontekst: {latestStats.inkludert_i_prompt}/{latestStats.total_tjenester} tjenester
           </div>
         )}
+      </div>
+
+      <div className="flex items-center gap-2">
+        <input
+          id="chat-debug-mode"
+          type="checkbox"
+          checked={debugMode}
+          onChange={(event) => setDebugMode(event.target.checked)}
+          className="h-4 w-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+        />
+        <label
+          htmlFor="chat-debug-mode"
+          className="text-sm font-medium text-[var(--color-text-muted)]"
+        >
+          Debug mode: vis all LLM-kommunikasjon
+        </label>
       </div>
 
       <div className="surface-muted p-4 sm:p-5">
@@ -137,6 +168,16 @@ export default function AIChatPage() {
                   }`}
                 >
                   {message.text}
+                  {message.debugTraces && message.debugTraces.length > 0 && (
+                    <details className="mt-3 rounded-lg border border-[var(--color-border)] bg-white/80 p-2">
+                      <summary className="cursor-pointer text-xs font-semibold text-[var(--color-text-muted)]">
+                        Debug traces ({message.debugTraces.length})
+                      </summary>
+                      <pre className="mt-2 whitespace-pre-wrap break-all text-[11px] leading-5 text-[var(--color-text)] max-h-80 overflow-auto">
+                        {JSON.stringify(message.debugTraces, null, 2)}
+                      </pre>
+                    </details>
+                  )}
                 </div>
               </div>
             );

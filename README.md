@@ -127,7 +127,8 @@ All endpoints are prefixed with `/api/tjenester`:
 AI chat endpoint:
 
 - `POST /api/chat/ask` - Ask question based only on `tjenester.json`
-  - Request body: `{ "message": "..." }`
+  - Request body: `{ "message": "...", "debug": true|false }`
+  - With `debug: true`, response includes full privacy+Gemini request/response traces
   - Flow:
     1. Local guardrail checks for sensitive user data
     2. If safe, selected JSON context is sent to Gemini

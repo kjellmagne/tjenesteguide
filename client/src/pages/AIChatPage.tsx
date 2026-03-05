@@ -62,9 +62,12 @@ export default function AIChatPage() {
       const response = await askChatQuestion(question);
 
       if (response.blocked) {
+        const warningText = response.details
+          ? `${response.warning}\n\nDetaljer: ${response.details}`
+          : response.warning;
         appendMessage(
           "warning",
-          response.warning ||
+          warningText ||
             "Meldingen din kan inneholde sensitiv informasjon. Fjern persondata og prøv igjen."
         );
       } else {
@@ -179,4 +182,3 @@ export default function AIChatPage() {
     </div>
   );
 }
-

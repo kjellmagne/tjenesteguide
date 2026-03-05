@@ -594,6 +594,7 @@ router.post("/ask", async (req: Request, res: Response) => {
     try {
       guardrailDecision = await runPrivacyGuardrail(message);
     } catch (error) {
+      console.error("Privacy guardrail error:", error);
       if (PRIVACY_REQUIRED) {
         return res.json({
           blocked: true,

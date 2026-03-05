@@ -334,7 +334,16 @@ async function askGemini(
 
   const raw = await response.text();
   if (!response.ok) {
-    throw new Error(`Gemini error (${response.status}): ${raw.slice(0, 400)}`);
+    let detail = raw.slice(0, 400);
+    try {
+      const parsed = JSON.parse(raw) as { error?: { message?: string } };
+      if (parsed.error?.message) {
+        detail = parsed.error.message;
+      }
+    } catch {
+      // Keep raw excerpt when body is not JSON.
+    }
+    throw new Error(`Gemini error (${response.status}): ${detail}`);
   }
 
   const parsed = JSON.parse(raw) as {
@@ -424,8 +433,10 @@ router.post("/ask", async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Chat error:", error);
+    const details = error instanceof Error ? error.message : String(error);
     return res.status(500).json({
       error: "Kunne ikke behandle chat-forespørselen",
+      details,
     });
   }
 });

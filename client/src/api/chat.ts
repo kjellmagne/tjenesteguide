@@ -26,12 +26,13 @@ export async function askChatQuestion(message: string): Promise<AskChatResponse>
 
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
-    const errMessage =
+    const baseError =
       (payload && typeof payload.error === "string" && payload.error) ||
       "Ukjent feil ved chat-kall";
-    throw new Error(errMessage);
+    const detail =
+      payload && typeof payload.details === "string" ? payload.details : "";
+    throw new Error(detail ? `${baseError}: ${detail}` : baseError);
   }
 
   return payload as AskChatResponse;
 }
-

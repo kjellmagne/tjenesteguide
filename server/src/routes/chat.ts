@@ -22,6 +22,11 @@ const PRIVACY_TIMEOUT_MS = Number.parseInt(
   10
 );
 const MAX_QUESTION_LENGTH = 1600;
+const MAX_DETAILED_CONTEXT_SERVICES = Number.parseInt(
+  process.env.MAX_DETAILED_CONTEXT_SERVICES || "6",
+  10
+);
+const MAX_TEXT_FIELD_CHARS = Number.parseInt(process.env.MAX_TEXT_FIELD_CHARS || "1200", 10);
 
 type GuardrailDecision = {
   allow: boolean;
@@ -62,14 +67,162 @@ function resolveTextField(plainText?: string, legacyArray?: string[]): string {
   return value.trim();
 }
 
-function buildGeminiContext(tjenester: Tjeneste[], totalServices: number) {
+function clipText(value: string, maxChars: number = MAX_TEXT_FIELD_CHARS): string {
+  const trimmed = value.trim();
+  if (trimmed.length <= maxChars) {
+    return trimmed;
+  }
+  return `${trimmed.slice(0, maxChars)} ...`;
+}
+
+function normalizeForSearch(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9æøå]+/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractSearchTerms(question: string): string[] {
+  const stopWords = new Set([
+    "hva",
+    "hvordan",
+    "hvilke",
+    "hvilken",
+    "hvem",
+    "kan",
+    "skal",
+    "som",
+    "for",
+    "med",
+    "til",
+    "og",
+    "eller",
+    "om",
+    "på",
+    "i",
+    "er",
+    "det",
+    "en",
+    "et",
+    "de",
+    "jeg",
+    "vi",
+    "du",
+    "the",
+    "and",
+    "with",
+  ]);
+
+  return normalizeForSearch(question)
+    .split(" ")
+    .map((term) => term.trim())
+    .filter((term) => term.length >= 3 && !stopWords.has(term));
+}
+
+function buildServiceSearchText(tjeneste: Tjeneste): string {
+  return normalizeForSearch(
+    [
+      tjeneste.navn,
+      tjeneste.kort_navn,
+      ...(tjeneste.synonymer || []),
+      ...(tjeneste.kategori_sti || []),
+      ...(tjeneste.temaer || []),
+      tjeneste.tjenestetype,
+      ...(tjeneste.målgruppe || []).flatMap((målgruppe) => [
+        målgruppe.beskrivelse,
+        ...(målgruppe.kategorier || []),
+      ]),
+      resolveTextField(tjeneste.for_du_søker_plain_text, tjeneste.for_du_søker),
+      tjeneste.beskrivelse_plain_text || tjeneste.beskrivelse,
+      resolveTextField(
+        tjeneste.tildelingskriterier_plain_text,
+        tjeneste.tildelingskriterier
+      ),
+      resolveTextField(
+        tjeneste.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
+        tjeneste.dette_inngår_ikke_i_tjenestetilbudet
+      ),
+      resolveTextField(tjeneste.hva_kan_du_forvente_plain_text, tjeneste.hva_kan_du_forvente),
+      resolveTextField(
+        tjeneste.forventninger_til_bruker_plain_text,
+        tjeneste.forventninger_til_bruker
+      ),
+      ...(tjeneste.lovhjemmel || []).map((lovhjemmel) => lovhjemmel.lov),
+      ...(tjeneste.kontaktpunkter || []).flatMap((kontakt) => [
+        kontakt.beskrivelse,
+        kontakt.verdi,
+      ]),
+    ]
+      .filter(Boolean)
+      .join("\n")
+  );
+}
+
+function pickRelevantTjenester(question: string, tjenester: Tjeneste[]): Tjeneste[] {
+  const normalizedQuestion = normalizeForSearch(question);
+  const terms = extractSearchTerms(question);
+
+  const scored = tjenester
+    .map((tjeneste) => {
+      const searchText = buildServiceSearchText(tjeneste);
+      let score = 0;
+
+      if (normalizedQuestion && searchText.includes(normalizedQuestion)) {
+        score += 20;
+      }
+
+      for (const term of terms) {
+        if (searchText.includes(term)) {
+          score += term.length >= 6 ? 4 : 2;
+        }
+      }
+
+      if (normalizeForSearch(tjeneste.navn).includes(normalizedQuestion)) {
+        score += 8;
+      }
+
+      return { tjeneste, score };
+    })
+    .sort((a, b) => b.score - a.score || a.tjeneste.navn.localeCompare(b.tjeneste.navn, "nb"));
+
+  const matched = scored
+    .filter((item) => item.score > 0)
+    .slice(0, MAX_DETAILED_CONTEXT_SERVICES)
+    .map((item) => item.tjeneste);
+
+  if (matched.length > 0) {
+    return matched;
+  }
+
+  return scored.slice(0, MAX_DETAILED_CONTEXT_SERVICES).map((item) => item.tjeneste);
+}
+
+function buildGeminiContext(
+  allTjenester: Tjeneste[],
+  detailedTjenester: Tjeneste[],
+  totalServices: number
+) {
   return {
     metadata: {
       total_tjenester: totalServices,
-      inkludert_i_prompt: tjenester.length,
+      katalog_i_prompt: allTjenester.length,
+      detaljer_i_prompt: detailedTjenester.length,
       kilde: "server/data/tjenester.json",
     },
-    tjenester: tjenester.map((tjeneste) => ({
+    katalog: allTjenester.map((tjeneste) => ({
+      id: tjeneste.id,
+      navn: tjeneste.navn,
+      kort_navn: tjeneste.kort_navn,
+      kategori_sti: tjeneste.kategori_sti,
+      temaer: tjeneste.temaer,
+      tjenestetype: tjeneste.tjenestetype,
+      vedtaksbasert: tjeneste.vedtaksbasert,
+      lavterskel: tjeneste.lavterskel,
+      trinn_nivå: tjeneste.trinn_nivå,
+      status: tjeneste.status,
+    })),
+    tjeneste_detaljer: detailedTjenester.map((tjeneste) => ({
       id: tjeneste.id,
       navn: tjeneste.navn,
       kort_navn: tjeneste.kort_navn,
@@ -83,23 +236,27 @@ function buildGeminiContext(tjenester: Tjeneste[], totalServices: number) {
       leverandør_type: tjeneste.leverandør_type,
       leverandør_organisasjoner: tjeneste.leverandør_organisasjoner,
       geografi: tjeneste.geografi,
-      for_du_søker: resolveTextField(tjeneste.for_du_søker_plain_text, tjeneste.for_du_søker),
-      beskrivelse: tjeneste.beskrivelse_plain_text || tjeneste.beskrivelse,
-      tildelingskriterier: resolveTextField(
-        tjeneste.tildelingskriterier_plain_text,
-        tjeneste.tildelingskriterier
+      for_du_søker: clipText(
+        resolveTextField(tjeneste.for_du_søker_plain_text, tjeneste.for_du_søker)
       ),
-      dette_inngår_ikke_i_tjenestetilbudet: resolveTextField(
-        tjeneste.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
-        tjeneste.dette_inngår_ikke_i_tjenestetilbudet
+      beskrivelse: clipText(tjeneste.beskrivelse_plain_text || tjeneste.beskrivelse),
+      tildelingskriterier: clipText(
+        resolveTextField(tjeneste.tildelingskriterier_plain_text, tjeneste.tildelingskriterier)
       ),
-      hva_kan_du_forvente: resolveTextField(
-        tjeneste.hva_kan_du_forvente_plain_text,
-        tjeneste.hva_kan_du_forvente
+      dette_inngår_ikke_i_tjenestetilbudet: clipText(
+        resolveTextField(
+          tjeneste.dette_inngår_ikke_i_tjenestetilbudet_plain_text,
+          tjeneste.dette_inngår_ikke_i_tjenestetilbudet
+        )
       ),
-      forventninger_til_bruker: resolveTextField(
-        tjeneste.forventninger_til_bruker_plain_text,
-        tjeneste.forventninger_til_bruker
+      hva_kan_du_forvente: clipText(
+        resolveTextField(tjeneste.hva_kan_du_forvente_plain_text, tjeneste.hva_kan_du_forvente)
+      ),
+      forventninger_til_bruker: clipText(
+        resolveTextField(
+          tjeneste.forventninger_til_bruker_plain_text,
+          tjeneste.forventninger_til_bruker
+        )
       ),
       vedtak: tjeneste.vedtak,
       evaluering: tjeneste.evaluering,
@@ -328,7 +485,8 @@ async function askGemini(
             text:
               "Du er en assistent for Tjenesteguide. Du skal KUN svare basert på JSON-data som følger i brukerprompten. " +
               "Ikke bruk ekstern kunnskap. Hvis svaret ikke finnes i dataene, svar nøyaktig: " +
-              '"Det finner jeg ikke i tjenestedataene." Svar på norsk bokmål.',
+              '"Det finner jeg ikke i tjenestedataene." Svar på norsk bokmål. ' +
+              "Bruk først katalogen for å finne relevante tjenester, og bruk tjeneste_detaljer for selve svaret.",
           },
         ],
       },
@@ -345,9 +503,12 @@ async function askGemini(
         },
       ],
       generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 900,
+        temperature: 0,
+        maxOutputTokens: 1200,
         responseMimeType: "text/plain",
+        thinkingConfig: {
+          thinkingBudget: 0,
+        },
       },
     }),
   });
@@ -451,7 +612,8 @@ router.post("/ask", async (req: Request, res: Response) => {
     }
 
     const allTjenester = await getAllTjenester();
-    const context = buildGeminiContext(allTjenester, allTjenester.length);
+    const detailedTjenester = pickRelevantTjenester(message, allTjenester);
+    const context = buildGeminiContext(allTjenester, detailedTjenester, allTjenester.length);
     const answer = await askGemini(message, context, geminiApiKey);
 
     return res.json({
@@ -459,7 +621,8 @@ router.post("/ask", async (req: Request, res: Response) => {
       answer,
       metadata: {
         total_tjenester: allTjenester.length,
-        inkludert_i_prompt: allTjenester.length,
+        inkludert_i_prompt: detailedTjenester.length,
+        katalog_i_prompt: allTjenester.length,
       },
     });
   } catch (error) {

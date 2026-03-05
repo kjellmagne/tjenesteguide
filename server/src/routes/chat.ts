@@ -33,8 +33,27 @@ type GeminiResponsePart = {
 };
 
 type GeminiCandidate = {
+  finishReason?: string;
+  safetyRatings?: Array<{
+    category?: string;
+    probability?: string;
+    blocked?: boolean;
+  }>;
   content?: {
     parts?: GeminiResponsePart[];
+  };
+};
+
+type GeminiGenerateContentResponse = {
+  candidates?: GeminiCandidate[];
+  promptFeedback?: {
+    blockReason?: string;
+    blockReasonMessage?: string;
+    safetyRatings?: Array<{
+      category?: string;
+      probability?: string;
+      blocked?: boolean;
+    }>;
   };
 };
 
@@ -328,6 +347,7 @@ async function askGemini(
       generationConfig: {
         temperature: 0.2,
         maxOutputTokens: 900,
+        responseMimeType: "text/plain",
       },
     }),
   });
@@ -346,9 +366,7 @@ async function askGemini(
     throw new Error(`Gemini error (${response.status}): ${detail}`);
   }
 
-  const parsed = JSON.parse(raw) as {
-    candidates?: GeminiCandidate[];
-  };
+  const parsed = JSON.parse(raw) as GeminiGenerateContentResponse;
 
   const answer = (parsed.candidates || [])
     .flatMap((candidate) => candidate.content?.parts || [])
@@ -357,7 +375,20 @@ async function askGemini(
     .trim();
 
   if (!answer) {
-    throw new Error("Gemini returned an empty response");
+    const finishReasons = (parsed.candidates || [])
+      .map((candidate) => candidate.finishReason)
+      .filter(Boolean)
+      .join(",");
+    const blockReason =
+      parsed.promptFeedback?.blockReasonMessage || parsed.promptFeedback?.blockReason || "";
+    const detailParts = [
+      finishReasons ? `finishReason=${finishReasons}` : "",
+      blockReason ? `blockReason=${blockReason}` : "",
+    ].filter(Boolean);
+    const detail = detailParts.length > 0 ? ` (${detailParts.join(" | ")})` : "";
+    throw new Error(
+      `Gemini returned an empty response${detail}. Raw excerpt: ${raw.slice(0, 320)}`
+    );
   }
 
   return answer;

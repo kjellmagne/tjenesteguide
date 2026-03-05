@@ -27,6 +27,10 @@ const MAX_DETAILED_CONTEXT_SERVICES = Number.parseInt(
   10
 );
 const MAX_TEXT_FIELD_CHARS = Number.parseInt(process.env.MAX_TEXT_FIELD_CHARS || "1200", 10);
+const GEMINI_THINKING_BUDGET = Number.parseInt(
+  process.env.GEMINI_THINKING_BUDGET || "256",
+  10
+);
 
 type GuardrailDecision = {
   allow: boolean;
@@ -473,6 +477,23 @@ async function askGemini(
     `https://generativelanguage.googleapis.com/v1beta/models/` +
     `${encodeURIComponent(GEMINI_MODEL)}:generateContent?key=${encodeURIComponent(geminiApiKey)}`;
 
+  const generationConfig: {
+    temperature: number;
+    maxOutputTokens: number;
+    responseMimeType: string;
+    thinkingConfig?: { thinkingBudget: number };
+  } = {
+    temperature: 0,
+    maxOutputTokens: 1200,
+    responseMimeType: "text/plain",
+  };
+
+  if (Number.isFinite(GEMINI_THINKING_BUDGET) && GEMINI_THINKING_BUDGET > 0) {
+    generationConfig.thinkingConfig = {
+      thinkingBudget: GEMINI_THINKING_BUDGET,
+    };
+  }
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -502,14 +523,7 @@ async function askGemini(
           ],
         },
       ],
-      generationConfig: {
-        temperature: 0,
-        maxOutputTokens: 1200,
-        responseMimeType: "text/plain",
-        thinkingConfig: {
-          thinkingBudget: 0,
-        },
-      },
+      generationConfig,
     }),
   });
 

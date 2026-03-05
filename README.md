@@ -68,6 +68,7 @@ export PRIVACY_ENDPOINT="http://10.200.16.103:8000/v1"  # optional (default set)
 export PRIVACY_API_KEY=""                       # optional
 export PRIVACY_REQUIRED="true"                  # optional, default true
 export PRIVACY_TIMEOUT_MS="7000"                # optional
+export GEMINI_THINKING_BUDGET="256"             # optional (must be > 0 for gemini-2.5-pro)
 ```
 
 Ollama alternative (if you want local Ollama instead):

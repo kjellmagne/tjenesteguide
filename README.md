@@ -127,7 +127,7 @@ All endpoints are prefixed with `/api/tjenester`:
 AI chat endpoint:
 
 - `POST /api/chat/ask` - Ask question based only on `tjenester.json`
-  - Request body: `{ "message": "...", "debug": true|false }`
+  - Request body: `{ "message": "...", "debug": true|false, "history": [{ "role": "user|assistant", "text": "..." }] }`
   - With `debug: true`, response includes full privacy+Gemini request/response traces
   - Flow:
     1. Local guardrail checks for sensitive user data
@@ -159,6 +159,7 @@ python3 scripts/import_tjenesteguide_docx.py
 - ✅ Automatic 6-digit ID generation
 - ✅ File-based persistence (JSON)
 - ✅ AI chat with local privacy guardrail + Gemini answers from JSON only
+- ✅ Chat session memory (client session) with contextual follow-up answers
 
 ## Notes
 

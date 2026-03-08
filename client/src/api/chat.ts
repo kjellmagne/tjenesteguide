@@ -13,6 +13,11 @@ export type LlmDebugEntry = {
   error?: string;
 };
 
+export type ChatHistoryMessage = {
+  role: "user" | "assistant";
+  text: string;
+};
+
 export type AskChatResponse =
   | {
       blocked: true;
@@ -25,6 +30,7 @@ export type AskChatResponse =
   | {
       blocked: false;
       answer: string;
+      followUpQuestions?: string[];
       metadata?: {
         total_tjenester: number;
         inkludert_i_prompt: number;
@@ -35,16 +41,34 @@ export type AskChatResponse =
       };
     };
 
+export type ChatStatusResponse = {
+  checkedAt: string;
+  privacy: {
+    ready: boolean;
+    label: string;
+    details?: string;
+  };
+  public: {
+    ready: boolean;
+    label: string;
+    details?: string;
+  };
+};
+
 export async function askChatQuestion(
   message: string,
-  options?: { debug?: boolean }
+  options?: { debug?: boolean; history?: ChatHistoryMessage[] }
 ): Promise<AskChatResponse> {
   const response = await fetch(`${CHAT_API_BASE}/ask`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message, debug: options?.debug === true }),
+    body: JSON.stringify({
+      message,
+      debug: options?.debug === true,
+      history: options?.history || [],
+    }),
   });
 
   const payload = await response.json().catch(() => null);
@@ -58,4 +82,15 @@ export async function askChatQuestion(
   }
 
   return payload as AskChatResponse;
+}
+
+export async function getChatStatus(): Promise<ChatStatusResponse> {
+  const response = await fetch(`${CHAT_API_BASE}/status`);
+  const payload = await response.json().catch(() => null);
+
+  if (!response.ok || !payload) {
+    throw new Error("Kunne ikke hente chat-status");
+  }
+
+  return payload as ChatStatusResponse;
 }

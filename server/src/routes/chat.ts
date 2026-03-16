@@ -1,6 +1,6 @@
 import express, { Request, Response as ExpressResponse } from "express";
-import { getAllTjenester } from "../repository/tjenesterRepo";
-import { Tjeneste } from "../models/tjeneste";
+import { getAllTjenester, getTjenesteguideMetadata } from "../repository/tjenesterRepo";
+import { Tjeneste, TjenesteguideMetadata } from "../models/tjeneste";
 
 const router = express.Router();
 
@@ -845,6 +845,7 @@ function pickRelevantTjenester(question: string, tjenester: Tjeneste[]): Tjenest
 }
 
 function buildGeminiContext(
+  metadata: TjenesteguideMetadata,
   allTjenester: Tjeneste[],
   detailedTjenester: Tjeneste[],
   totalServices: number
@@ -855,6 +856,9 @@ function buildGeminiContext(
       katalog_i_prompt: allTjenester.length,
       detaljer_i_prompt: detailedTjenester.length,
       kilde: "Informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere",
+    },
+    tjenesteguide: {
+      generell_beskrivelse: metadata.generell_beskrivelse,
     },
     katalog: allTjenester.map((tjeneste) => ({
       id: tjeneste.id,
@@ -1404,7 +1408,7 @@ async function askGemini(
       parts: [
         {
           text:
-            "Du er Tjenestelosen, en informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere. " +
+            "Du er Ingunn i Tjenesteguide, en informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere. " +
             "Du skal kun bruke tjenesteinformasjonen som følger i brukerprompten, og ikke bruke ekstern kunnskap. " +
             "Bruk først katalogen for å finne relevante tjenester, og bruk tjeneste_detaljer for selve svaret. " +
             "Svar i varm, tydelig og hverdagslig norsk. Vær forståelig, kind og serviceinnstilt. " +
@@ -1617,9 +1621,17 @@ router.post("/ask", async (req: Request, res: ExpressResponse) => {
       });
     }
 
-    const allTjenester = await getAllTjenester();
+    const [allTjenester, tjenesteguideMetadata] = await Promise.all([
+      getAllTjenester(),
+      getTjenesteguideMetadata(),
+    ]);
     const detailedTjenester = pickRelevantTjenester(message, allTjenester);
-    const context = buildGeminiContext(allTjenester, detailedTjenester, allTjenester.length);
+    const context = buildGeminiContext(
+      tjenesteguideMetadata,
+      allTjenester,
+      detailedTjenester,
+      allTjenester.length
+    );
     const geminiResponse = await askGemini(message, context, geminiApiKey, history, debug);
     const rawFollowUpQuestions =
       geminiResponse.followUpQuestions.length > 0

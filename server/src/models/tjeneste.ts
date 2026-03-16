@@ -120,3 +120,9 @@ export interface Tjeneste {
   interne_notater?: string[];
 }
 
+export interface TjenesteguideMetadata {
+  generell_beskrivelse: string;
+  generell_beskrivelse_plain_text?: string;
+  generell_beskrivelse_rich_base64?: string;
+}
+

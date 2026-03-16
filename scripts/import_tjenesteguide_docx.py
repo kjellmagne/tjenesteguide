@@ -22,6 +22,22 @@ from zipfile import ZipFile
 ROOT = Path(__file__).resolve().parents[1]
 DOCX_PATH = ROOT / "Tjenesteguide fra Astrid 21 01 26.docx"
 OUT_PATH = ROOT / "server" / "data" / "tjenester.json"
+DEFAULT_METADATA = {
+    "generell_beskrivelse": (
+        "Tjenesteguide samler informasjon om tjenester levert av Alta kommune "
+        "og samarbeidspartnere."
+    ),
+    "generell_beskrivelse_plain_text": (
+        "Tjenesteguide samler informasjon om tjenester levert av Alta kommune "
+        "og samarbeidspartnere."
+    ),
+    "generell_beskrivelse_rich_base64": base64.b64encode(
+        (
+            "Tjenesteguide samler informasjon om tjenester levert av Alta kommune "
+            "og samarbeidspartnere."
+        ).encode("utf-8")
+    ).decode("ascii"),
+}
 
 NS = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
 
@@ -86,6 +102,76 @@ def normalize_label(text: str) -> str:
     value = value.replace("/", " ")
     value = re.sub(r"\s+", " ", value).strip()
     return value
+
+
+def decode_base64_to_utf8(value: str | None) -> str:
+    if not value:
+        return ""
+    try:
+        return base64.b64decode(value).decode("utf-8")
+    except Exception:
+        return ""
+
+
+def encode_utf8_to_base64(value: str) -> str:
+    return base64.b64encode(value.encode("utf-8")).decode("ascii")
+
+
+def strip_html_to_plain_text(value: str) -> str:
+    text = re.sub(r"<br\s*/?>", "\n", value, flags=re.IGNORECASE)
+    text = re.sub(r"</(p|div|li|tr|h[1-6])>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = html.unescape(text)
+    text = text.replace("\r\n", "\n")
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    return text.strip()
+
+
+def escape_html(value: str) -> str:
+    return (
+        value.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
+def plain_text_to_rich_html(value: str) -> str:
+    if not value:
+        return ""
+    return escape_html(value).replace("\r\n", "\n").replace("\n", "<br>")
+
+
+def normalize_metadata(metadata: dict | None) -> dict:
+    if not isinstance(metadata, dict):
+        metadata = {}
+
+    decoded_rich = decode_base64_to_utf8(metadata.get("generell_beskrivelse_rich_base64"))
+    plain_from_rich = strip_html_to_plain_text(decoded_rich) if decoded_rich else ""
+    explicit_plain = (
+        metadata["generell_beskrivelse_plain_text"]
+        if isinstance(metadata.get("generell_beskrivelse_plain_text"), str)
+        else None
+    )
+    explicit_description = (
+        metadata["generell_beskrivelse"]
+        if isinstance(metadata.get("generell_beskrivelse"), str)
+        else None
+    )
+    plain = explicit_plain
+    if plain is None:
+        plain = explicit_description
+    if plain is None:
+        plain = plain_from_rich or DEFAULT_METADATA["generell_beskrivelse"]
+    rich_html = decoded_rich or plain_text_to_rich_html(plain)
+
+    return {
+        "generell_beskrivelse": plain,
+        "generell_beskrivelse_plain_text": plain,
+        "generell_beskrivelse_rich_base64": encode_utf8_to_base64(rich_html),
+    }
 
 
 def heading_level(style: str) -> int | None:
@@ -650,16 +736,41 @@ def build_services(sections: list[HeadingSection]) -> list[dict]:
     return services
 
 
+def load_existing_metadata() -> dict:
+    if not OUT_PATH.exists():
+        return normalize_metadata(DEFAULT_METADATA)
+
+    try:
+        parsed = json.loads(OUT_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return normalize_metadata(DEFAULT_METADATA)
+
+    if isinstance(parsed, dict) and isinstance(parsed.get("metadata"), dict):
+        return normalize_metadata(parsed["metadata"])
+
+    return normalize_metadata(DEFAULT_METADATA)
+
+
 def main() -> None:
     if not DOCX_PATH.exists():
         raise FileNotFoundError(f"Source file not found: {DOCX_PATH}")
 
     sections = parse_heading_sections(DOCX_PATH)
     services = build_services(sections)
+    metadata = load_existing_metadata()
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUT_PATH.write_text(
-        json.dumps(services, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(
+            {
+                "metadata": metadata,
+                "tjenester": services,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
     )
 
     print(f"Imported services: {len(services)}")

@@ -1,4 +1,4 @@
-import { Tjeneste } from "../types/tjeneste";
+import { Tjeneste, TjenesteguideMetadata } from "../types/tjeneste";
 
 const API_BASE = "/api/tjenester";
 
@@ -24,6 +24,33 @@ export async function fetchTjenester(params?: {
   if (!response.ok) {
     throw new Error(`Failed to fetch tjenester: ${response.statusText}`);
   }
+  return response.json();
+}
+
+export async function fetchTjenesteguideMetadata(): Promise<TjenesteguideMetadata> {
+  const response = await fetch(`${API_BASE}/meta`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch metadata: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+export async function updateTjenesteguideMetadata(
+  metadata: TjenesteguideMetadata
+): Promise<TjenesteguideMetadata> {
+  const response = await fetch(`${API_BASE}/meta`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(metadata),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: "Unknown error" }));
+    throw new Error(error.error || `Failed to update metadata: ${response.statusText}`);
+  }
+
   return response.json();
 }
 

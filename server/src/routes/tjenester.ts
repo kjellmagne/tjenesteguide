@@ -5,12 +5,20 @@ import {
   createTjenesteWithAutoId,
   updateTjeneste,
   deleteTjeneste,
+  getTjenesteguideMetadata,
+  updateTjenesteguideMetadata,
 } from "../repository/tjenesterRepo";
 import { TjenesteSchema } from "../validation/tjenesteSchema";
 import { Tjeneste } from "../models/tjeneste";
+import { z } from "zod";
 
 const router = express.Router();
 const CreateTjenesteSchema = TjenesteSchema.omit({ id: true });
+const TjenesteguideMetadataSchema = z.object({
+  generell_beskrivelse: z.string(),
+  generell_beskrivelse_plain_text: z.string().optional(),
+  generell_beskrivelse_rich_base64: z.string().optional(),
+});
 
 type BeskrivelseRepresentations = {
   beskrivelse: string;
@@ -206,6 +214,42 @@ function filterTjenester(
 
   return filtered;
 }
+
+/**
+ * GET /api/tjenester/meta
+ * Get top-level metadata for the guide.
+ */
+router.get("/meta", async (_req: Request, res: Response) => {
+  try {
+    const metadata = await getTjenesteguideMetadata();
+    res.json(metadata);
+  } catch (error) {
+    console.error("Error fetching tjenesteguide metadata:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+/**
+ * PUT /api/tjenester/meta
+ * Update top-level metadata for the guide.
+ */
+router.put("/meta", async (req: Request, res: Response) => {
+  try {
+    const validationResult = TjenesteguideMetadataSchema.safeParse(req.body);
+    if (!validationResult.success) {
+      return res.status(400).json({
+        error: "Validation error",
+        details: validationResult.error.errors,
+      });
+    }
+
+    const metadata = await updateTjenesteguideMetadata(validationResult.data);
+    res.json(metadata);
+  } catch (error) {
+    console.error("Error updating tjenesteguide metadata:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 /**
  * GET /api/tjenester

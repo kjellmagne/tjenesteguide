@@ -39,14 +39,20 @@ const QUICK_PROMPTS = [
 ];
 
 const CHAT_SESSION_STORAGE_KEY = "tjenesteguide_ai_chat_session_v1";
-const CHATBOT_NAME = "Tjenestelosen";
+const APP_TITLE = "Tjenesteguide";
+const CHATBOT_NAME = "Ingunn";
 const DEFAULT_ASSISTANT_MESSAGE: ChatMessage = {
   id: 1,
   role: "assistant",
   text:
-    `Hei. Jeg er ${CHATBOT_NAME}, en informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere. ` +
+    `Hei. Jeg heter ${CHATBOT_NAME}, og jeg hjelper deg gjerne med å finne fram i ${APP_TITLE}. ` +
+    "Dette er en informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere. " +
     "Jeg hjelper deg gjerne med å finne fram i tilbud, kriterier, priser og hvordan du går videre.",
 };
+
+function getAssistantMessageLabel(message: ChatMessage): string {
+  return message.id === DEFAULT_ASSISTANT_MESSAGE.id ? `${CHATBOT_NAME} sier` : `${CHATBOT_NAME} svarer`;
+}
 
 function loadMessagesFromSession(): ChatMessage[] {
   if (typeof window === "undefined") {
@@ -114,7 +120,7 @@ export default function AIChatPage() {
             message.role === "warning"
               ? "Personvernkontroll"
               : message.role === "assistant"
-              ? CHATBOT_NAME
+              ? getAssistantMessageLabel(message)
               : "Du",
           preview: message.text.slice(0, 180),
           traceIndex: index + 1,
@@ -348,7 +354,7 @@ export default function AIChatPage() {
           </div>
 
           <div className="ads-chat-header-copy">
-            <h1 className="ads-chat-title">{CHATBOT_NAME}</h1>
+            <h1 className="ads-chat-title">{APP_TITLE}</h1>
             <p className="ads-chat-subtitle">
               Informasjonstjeneste for tjenester levert av Alta kommune og samarbeidspartnere
             </p>
@@ -359,10 +365,7 @@ export default function AIChatPage() {
           <div className="ads-chat-thread">
             {visibleMessages.map((message) => (
               <Fragment key={message.id}>
-                <MessageBubble
-                  chatbotName={CHATBOT_NAME}
-                  message={message}
-                />
+                <MessageBubble message={message} />
                 {message.id === latestAssistantFollowUpMessageId &&
                   message.role === "assistant" &&
                   Array.isArray(message.followUpQuestions) &&
@@ -405,7 +408,7 @@ export default function AIChatPage() {
                   <BotIcon />
                 </div>
                 <div className="ads-chat-message-content">
-                  <div className="ads-chat-message-label">{CHATBOT_NAME}</div>
+                  <div className="ads-chat-message-label">{`${CHATBOT_NAME} svarer`}</div>
                   <div className="ads-chat-bubble ads-chat-bubble-assistant">
                     <div className="ads-chat-loading">
                       <Spinner size="small" />
@@ -581,14 +584,16 @@ export default function AIChatPage() {
 
 function MessageBubble({
   message,
-  chatbotName,
 }: {
   message: ChatMessage;
-  chatbotName: string;
 }) {
   const isUser = message.role === "user";
   const isWarning = message.role === "warning";
-  const messageLabel = isUser ? null : isWarning ? "Personvernkontroll" : chatbotName;
+  const messageLabel = isUser
+    ? null
+    : isWarning
+    ? "Personvernkontroll"
+    : getAssistantMessageLabel(message);
 
   return (
     <div

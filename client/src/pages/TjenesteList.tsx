@@ -1,7 +1,25 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Tjeneste } from "../types/tjeneste";
-import { fetchTjenester, deleteTjeneste } from "../api/tjenester";
+import { Tjeneste, TjenesteguideMetadata } from "../types/tjeneste";
+import {
+  fetchTjenester,
+  deleteTjeneste,
+  fetchTjenesteguideMetadata,
+  updateTjenesteguideMetadata,
+} from "../api/tjenester";
+import RichTextEditor from "../components/RichTextEditor";
+import {
+  encodeUtf8ToBase64,
+  normalizeBeskrivelseRepresentations,
+  resolveRichHtml,
+  stripRichTextToPlainText,
+} from "../utils/richText";
+
+const INITIAL_GUIDE_METADATA: TjenesteguideMetadata = {
+  generell_beskrivelse: "",
+  generell_beskrivelse_plain_text: "",
+  generell_beskrivelse_rich_base64: "",
+};
 
 export default function TjenesteList() {
   const [tjenester, setTjenester] = useState<Tjeneste[]>([]);
@@ -12,8 +30,34 @@ export default function TjenesteList() {
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [tjenestetypeFilter, setTjenestetypeFilter] = useState<string>("");
   const [trinnFilter, setTrinnFilter] = useState<string>("");
+  const [guideMetadata, setGuideMetadata] =
+    useState<TjenesteguideMetadata>(INITIAL_GUIDE_METADATA);
+  const [savedGuideMetadataSnapshot, setSavedGuideMetadataSnapshot] = useState(
+    JSON.stringify(INITIAL_GUIDE_METADATA)
+  );
+  const [metadataLoading, setMetadataLoading] = useState(true);
+  const [metadataSaving, setMetadataSaving] = useState(false);
+  const [metadataError, setMetadataError] = useState<string | null>(null);
+  const [metadataSaved, setMetadataSaved] = useState(false);
   const latestRequestIdRef = useRef(0);
   const navigate = useNavigate();
+  const guideDescriptionRichHtml = useMemo(
+    () =>
+      resolveRichHtml({
+        beskrivelse: guideMetadata.generell_beskrivelse,
+        beskrivelse_plain_text: guideMetadata.generell_beskrivelse_plain_text,
+        beskrivelse_rich_base64: guideMetadata.generell_beskrivelse_rich_base64,
+      }),
+    [
+      guideMetadata.generell_beskrivelse,
+      guideMetadata.generell_beskrivelse_plain_text,
+      guideMetadata.generell_beskrivelse_rich_base64,
+    ]
+  );
+
+  useEffect(() => {
+    void loadMetadata();
+  }, []);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -24,6 +68,44 @@ export default function TjenesteList() {
       window.clearTimeout(timeoutId);
     };
   }, [searchQuery, statusFilter, tjenestetypeFilter, trinnFilter]);
+
+  useEffect(() => {
+    if (!metadataSaved) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setMetadataSaved(false);
+    }, 2200);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [metadataSaved]);
+
+  async function loadMetadata() {
+    try {
+      setMetadataLoading(true);
+      setMetadataError(null);
+      const metadata = await fetchTjenesteguideMetadata();
+      const normalized = normalizeBeskrivelseRepresentations({
+        beskrivelse: metadata.generell_beskrivelse,
+        beskrivelse_plain_text: metadata.generell_beskrivelse_plain_text,
+        beskrivelse_rich_base64: metadata.generell_beskrivelse_rich_base64,
+      });
+      const nextMetadata: TjenesteguideMetadata = {
+        generell_beskrivelse: normalized.beskrivelse,
+        generell_beskrivelse_plain_text: normalized.beskrivelse_plain_text,
+        generell_beskrivelse_rich_base64: normalized.beskrivelse_rich_base64,
+      };
+      setGuideMetadata(nextMetadata);
+      setSavedGuideMetadataSnapshot(JSON.stringify(nextMetadata));
+    } catch (err: any) {
+      setMetadataError(err.message || "Kunne ikke laste generell beskrivelse");
+    } finally {
+      setMetadataLoading(false);
+    }
+  }
 
   async function loadTjenester() {
     const requestId = ++latestRequestIdRef.current;
@@ -57,6 +139,31 @@ export default function TjenesteList() {
     }
   }
 
+  async function handleSaveGuideDescription() {
+    try {
+      setMetadataSaving(true);
+      setMetadataError(null);
+      const updated = await updateTjenesteguideMetadata(guideMetadata);
+      const normalized = normalizeBeskrivelseRepresentations({
+        beskrivelse: updated.generell_beskrivelse,
+        beskrivelse_plain_text: updated.generell_beskrivelse_plain_text,
+        beskrivelse_rich_base64: updated.generell_beskrivelse_rich_base64,
+      });
+      const nextMetadata: TjenesteguideMetadata = {
+        generell_beskrivelse: normalized.beskrivelse,
+        generell_beskrivelse_plain_text: normalized.beskrivelse_plain_text,
+        generell_beskrivelse_rich_base64: normalized.beskrivelse_rich_base64,
+      };
+      setGuideMetadata(nextMetadata);
+      setSavedGuideMetadataSnapshot(JSON.stringify(nextMetadata));
+      setMetadataSaved(true);
+    } catch (err: any) {
+      setMetadataError(err.message || "Kunne ikke lagre generell beskrivelse");
+    } finally {
+      setMetadataSaving(false);
+    }
+  }
+
   async function handleDelete(id: string, navn: string) {
     if (!confirm(`Er du sikker på at du vil slette "${navn}"?`)) {
       return;
@@ -79,6 +186,18 @@ export default function TjenesteList() {
     );
   }
 
+  const hasGuideDescriptionChanges =
+    JSON.stringify(guideMetadata) !== savedGuideMetadataSnapshot;
+
+  function handleGuideDescriptionChange(richHtml: string) {
+    const plainText = stripRichTextToPlainText(richHtml);
+    setGuideMetadata({
+      generell_beskrivelse: plainText,
+      generell_beskrivelse_plain_text: plainText,
+      generell_beskrivelse_rich_base64: encodeUtf8ToBase64(richHtml),
+    });
+  }
+
   return (
     <div className="space-y-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -93,6 +212,54 @@ export default function TjenesteList() {
             Oppdaterer resultater...
           </div>
         )}
+      </div>
+
+      <div className="card p-6 space-y-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="space-y-1">
+            <h2 className="text-xl font-semibold text-[var(--color-text)]">
+              Generell beskrivelse av Tjenesteguide
+            </h2>
+            <p className="text-sm text-[var(--color-text-muted)] max-w-3xl">
+              Denne teksten gjelder hele Tjenesteguide og lagres ett sted i JSON-fila. Den er
+              ikke knyttet til enkeltjenester.
+            </p>
+          </div>
+          {metadataSaved && (
+            <div className="badge badge-primary">
+              Lagret
+            </div>
+          )}
+        </div>
+
+        <div
+          aria-disabled={metadataLoading || metadataSaving}
+          className={metadataLoading || metadataSaving ? "pointer-events-none opacity-70" : ""}
+        >
+          <RichTextEditor
+            value={guideDescriptionRichHtml}
+            onChange={handleGuideDescriptionChange}
+            placeholder="Skriv en generell beskrivelse av Tjenesteguide..."
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="text-sm text-[var(--color-text-muted)]">
+            {metadataLoading
+              ? "Laster beskrivelse..."
+              : metadataError
+              ? metadataError
+              : "Bruk denne til å beskrive hva Tjenesteguide er på et overordnet nivå."}
+          </div>
+          <button
+            type="button"
+            onClick={() => void handleSaveGuideDescription()}
+            className="btn-primary"
+            disabled={metadataLoading || metadataSaving || !hasGuideDescriptionChanges}
+          >
+            {metadataSaving ? "Lagrer..." : "Lagre beskrivelse"}
+          </button>
+        </div>
       </div>
 
       {error && (
